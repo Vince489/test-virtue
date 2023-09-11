@@ -1,9 +1,9 @@
 // mongodb
-require("./src/config/db");
+require("./config/db");
 
 const express = require("express");
 const cors = require("cors");
-const routes = require("./src/routes");
+const routes = require("./routes");
 const cookieParser = require("cookie-parser");
 
 
