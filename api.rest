@@ -34,8 +34,8 @@ POST http://localhost:4400/api/v1/gamer/signup
 Content-Type: application/json
 
 {
-  "gamerTag": "gamer1",
-  "email": "gamer1@game.com",
+  "gamerTag": "gamer2",
+  "email": "gamer2@game.com",
   "password": "12345678"
 }
 
