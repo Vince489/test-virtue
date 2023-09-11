@@ -1,0 +1,42 @@
+// get all accounts
+GET http://localhost:4400/api/v1/account
+
+###
+// add new account
+POST http://localhost:4400/api/v1/account
+Content-Type: application/json
+
+###
+// recieve airdrop
+POST http://localhost:4400/api/v1/account/airdrop
+Content-Type: application/json
+
+{
+  "userPublicKey": "5jgY8xNyr49vozmkkhDReyLYWqGNRow7yw1hwWmCBvu4"
+}
+
+###
+POST http://localhost:4400/api/v1/account/fee
+Content-Type: application/json
+
+{
+  "userPublicKey": "DCeWSB7JWvPSymCyvrvEz2Cj9Mu5nHpWNf8MGZBAGNPu"
+}
+
+###
+// add VRT to db
+POST http://localhost:4400/api/v1/vrt
+Content-Type: application/json
+
+###
+// register new gamer
+POST http://localhost:4400/api/v1/gamer/signup
+Content-Type: application/json
+
+{
+  "gamerTag": "gamer1",
+  "email": "gamer1@game.com",
+  "password": "12345678"
+}
+
+
