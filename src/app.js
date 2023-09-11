@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 const corsOptions = {
-  origin: 'https://planetvirtron.com/',
+  origin: 'https://planetvirtron.com',
   credentials: true, // Allow credentials (cookies)
 };
 
