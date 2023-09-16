@@ -5,6 +5,7 @@ const Keypair = require("./../../utils/keypair");
 const TokenAccount = require("./../tokenAccount/model");
 const Account = require("./model");
 const VRT = require("./../VRT/model");
+const SeedPhrase = require("./../seedPhrase/model");
 
 // get all accounts
 router.get("/", async (req, res, next) => {
@@ -23,11 +24,17 @@ router.post("/", async (req, res, next) => {
     const keypair = Keypair.generate();
     const seedPhrase = Mnemonic.generate();
 
+    // Create a new seed phrase document
+    const newSeedPhrase = new SeedPhrase({
+      seedPhrase: seedPhrase.seedPhrase,
+    });
 
+    // Save the new seed phrase to the database
+    await newSeedPhrase.save();
 
-    // Create a new account object with the generated data
+    // Create a new account associated with the seed phrase
     const newAccount = new Account({
-      seedPhrase: seedPhrase,
+      seedPhrase: newSeedPhrase._id, // Reference the saved seed phrase document
       publicKey: keypair.publicKey,
       privateKey: keypair.privateKey,
     });
@@ -63,6 +70,9 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
+
+module.exports = router;
+
 
 router.post('/airdrop', async (req, res) => {
   try {

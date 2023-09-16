@@ -1,10 +1,20 @@
 // get all accounts
 GET http://localhost:4400/api/v1/account
 
+
 ###
-// add new account
-POST http://localhost:4400/api/v1/account
+// create a new account 
+POST http://localhost:4400/api/v1/account/
 Content-Type: application/json
+
+###
+// retrieve account by seed phrase
+POST http://localhost:4400/api/v1/account/recover
+Content-Type: application/json
+
+{
+  "seedPhrase": "fold seed expose cash run gather robust claim labor business taste caution"
+}
 
 ###
 // recieve airdrop
