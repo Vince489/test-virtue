@@ -1,14 +1,19 @@
 const mongoose = require('mongoose');
 
 const accountSchema = new mongoose.Schema({
-  seedPhrase: [],
+  seedPhrase: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'SeedPhrase',
+  },
   publicKey: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   privateKey: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   tokenAccounts: [{
     type: mongoose.Schema.Types.ObjectId,

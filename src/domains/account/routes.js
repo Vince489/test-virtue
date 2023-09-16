@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Mnemonic = require("./../../utils/seedPhrase");
 const Keypair = require("./../../utils/keypair");
-const { hashData } = require("./../../utils/hashData");
 const TokenAccount = require("./../tokenAccount/model");
 const Account = require("./model");
 const VRT = require("./../VRT/model");
@@ -24,12 +23,11 @@ router.post("/", async (req, res, next) => {
     const keypair = Keypair.generate();
     const seedPhrase = Mnemonic.generate();
 
-    // Hash the seed phrase before saving it
-    const hashedSeedPhrase = await hashData(seedPhrase.seedPhrase);
+
 
     // Create a new account object with the generated data
     const newAccount = new Account({
-      seedPhrase: hashedSeedPhrase,
+      seedPhrase: seedPhrase,
       publicKey: keypair.publicKey,
       privateKey: keypair.privateKey,
     });

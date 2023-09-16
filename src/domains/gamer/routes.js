@@ -28,7 +28,12 @@ router.post("/signup", async (req, res) => {
       const token = generateToken(newGamer._id);
 
 // Set the cookie with SameSite=None and Secure attributes
-      res.cookie("token", token, { httpOnly: true, sameSite: "None", secure: true, expires: new Date(Date.now() + 3600000) });
+      res.cookie("token", token, { 
+        httpOnly: true, 
+        sameSite: "None", 
+        secure: true, 
+        expires: new Date(Date.now() + 3600000) 
+      });
       res.status(201).json({ gamer: newGamer, token });
     }
   } catch (error) {
