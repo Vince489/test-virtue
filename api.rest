@@ -8,35 +8,45 @@ POST http://localhost:4400/api/v1/account/
 Content-Type: application/json
 
 ###
+// get associated account
+GET http://localhost:4400/api/v1/account/HKhGxYvYucDaL2Yo7V6A8Jv6Gjd9ZE839LwJDJiuxe3B/
+
+###
+// get airdrop
+POST http://localhost:4400/api/v1/account/HKhGxYvYucDaL2Yo7V6A8Jv6Gjd9ZE839LwJDJiuxe3B/airdrop
+Content-Type: application/json
+
+
+
+###
+// get balance
+GET http://localhost:4400/api/v1/account/HKhGxYvYucDaL2Yo7V6A8Jv6Gjd9ZE839LwJDJiuxe3B/vrt-balance
+
+###
 // retrieve account by seed phrase
-POST http://localhost:4400/api/v1/account/recover
+POST http://localhost:4400/api/v1/account/transfer
 Content-Type: application/json
 
 {
-  "seedPhrase": "fold seed expose cash run gather robust claim labor business taste caution"
+  "senderPublicKey": "HKhGxYvYucDaL2Yo7V6A8Jv6Gjd9ZE839LwJDJiuxe3B", 
+  "recipientPublicKey": "6SjZh1jJUenkqHCB3dNu7BhXDpmo3itygrBaKax5BWpg", 
+  "amount": "13.95"
 }
 
-###
-// recieve airdrop
-POST http://localhost:4400/api/v1/account/airdrop
-Content-Type: application/json
-
-{
-  "userPublicKey": "5jgY8xNyr49vozmkkhDReyLYWqGNRow7yw1hwWmCBvu4"
-}
 
 ###
-POST http://localhost:4400/api/v1/account/fee
-Content-Type: application/json
-
-{
-  "userPublicKey": "DCeWSB7JWvPSymCyvrvEz2Cj9Mu5nHpWNf8MGZBAGNPu"
-}
-
-###
-// add VRT to db
+// add VRT to db 
 POST http://localhost:4400/api/v1/vrt
 Content-Type: application/json
+
+###
+// airdrop VRT 
+POST http://localhost:4400/api/v1/vrt/airdrop
+Content-Type: application/json
+
+{
+  "publicKey": "3wUBnsHUaaZBUKw5CBp6RNpxFrgxBQeJB4gUyapsMYnx"
+}
 
 ###
 // register new gamer
@@ -48,5 +58,49 @@ Content-Type: application/json
   "email": "gamer2@game.com",
   "password": "12345678"
 }
+
+###
+// add account to gamer
+POST http://localhost:4400/api/v1/gamer/add-account/651b22a860a8eb45927c153e
+Content-Type: application/json
+
+{
+  "accountId": "651b2332c026ff0182b82875"
+}
+
+
+
+###
+// get all seed phrases
+GET http://localhost:4400/api/v1/seedPhrase
+
+###
+// get all blocks
+GET http://localhost:4400/api/v1/block
+
+###
+// create a new block
+POST http://localhost:4400/api/v1/block
+Content-Type: application/json
+
+###
+// create genesis block
+POST http://localhost:4400/api/v1/block/genesis
+Content-Type: application/json
+
+
+###
+// transfer VRT
+POST http://localhost:4400/api/v1/transaction/transfer
+Content-Type: application/json
+
+{
+  "senderPublicKey": "5ubXf3orDt44tZ3Kd3fQxnhkPhYkKG5cWFA74tVvyAfW", 
+  "recipientPublicKey": "3wUBnsHUaaZBUKw5CBp6RNpxFrgxBQeJB4gUyapsMYnx", 
+  "amount": 10, 
+  "privateKey": "h5ZoEaUXsPP3WNNi3GugVM7TpuLpCZcvACuEyX9PHoZ9mLgjpATsk7Vz3emByVtSmVVKToVUApxDouQ62zMCuPi"
+}
+
+
 
 

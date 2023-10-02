@@ -1,35 +1,28 @@
 const mongoose = require('mongoose');
 
 const vrtSchema = new mongoose.Schema({
-  mint: {
+  name: {
     type: String,
-    default: 'VRT1111111111111111111111111111111111111111'
-  },
-  icon: {
-    type: String,
-    default: 'https://virtualrealitytoken.com/token.img'
+    required: true,
+    default: 'Virtue' // Name of the cryptocurrency
   },
   symbol: {
     type: String,
-    default: 'VRT'
+    required: true,
+    default: 'VRT' // Symbol or ticker for the cryptocurrency
   },
-  mintAuthority: {
-    type: String,
-  },
-  freezeAuthority: {
-    type: String,
-  },
-  supply: {
+  totalSupply: {
     type: Number,
-    default: 1000000000
+    required: true,
+    default: 1000000000 // Total supply of VRT
   },
   balance: {
     type: Number,
     default: 1000000000
   },
-  decimals: {
-    type: Number,
-    default: 6
+  icon: {
+    type: String,
+    default: 'https://virtualrealitytoken.com/token.img'
   },
   frozen: {
     type: Boolean,

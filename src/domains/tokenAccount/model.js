@@ -11,8 +11,9 @@ const tokenAccountSchema = new mongoose.Schema({
     required: true
   },
   owner: {
-    type: String,
-    required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Account', // Reference to the user's Account
+    required: true,
   },
   balance: {
     type: Number,

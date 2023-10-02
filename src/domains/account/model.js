@@ -4,6 +4,7 @@ const accountSchema = new mongoose.Schema({
   seedPhrase: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'SeedPhrase',
+    required: true,
   },
   publicKey: {
     type: String,
@@ -20,6 +21,11 @@ const accountSchema = new mongoose.Schema({
     ref: 'TokenAccount',
     required: true
   }],
+  vrtAccount: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'VRTAccount',
+    required: true
+  },
 });
 
 const Account = mongoose.model('Account', accountSchema);

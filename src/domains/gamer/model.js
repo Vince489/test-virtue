@@ -11,10 +11,6 @@ const gamerSchema = new mongoose.Schema({
     unique: true,
     required: true 
   },
-  jwtToken: {
-    type: String,
-    required: false,
-  },
   password: {
     type: String,
     required: true,
@@ -31,6 +27,7 @@ const gamerSchema = new mongoose.Schema({
   account: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
+    unique: true
   },
   fighters: [{
     type: mongoose.Schema.Types.ObjectId,
