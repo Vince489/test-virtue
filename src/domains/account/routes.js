@@ -71,9 +71,6 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-module.exports = router;
-
-
 router.post('/airdrop', async (req, res) => {
   try {
     const { userPublicKey } = req.body; // Extract the user's public key from the request body
@@ -116,58 +113,6 @@ router.post('/airdrop', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-router.post('/fee', async (req, res) => {
-  try {
-    const { userPublicKey } = req.body; // Extract the user's public key from the request body
-
-    // Check if the token account exists (using the user's public key)
-    const recipientAccount = await TokenAccount.findOne({ owner: userPublicKey });
-
-    if (!recipientAccount) {
-      return res.status(404).json({ error: 'Token account not found.' });
-    }
-
-    // Check if the recipient has already received the airdrop
-    if (recipientAccount.airdropReceived) {
-      return res.status(400).json({ error: 'Airdrop already received.' });
-    }
-
-    // Decrement the token balance for airdrop
-    const tokenToAirdrop = await VRT.findOne({ mint: 'VRT1111111111111111111111111111111111111111' });
-
-    if (!tokenToAirdrop) {
-      return res.status(404).json({ error: 'Token not found.' });
-    }
-
-    // Define the transaction fee amount (in VRT)
-    const transactionFeeVRT = 0.000005; // 0.000005 VRT
-
-    // Calculate the amount to be airdropped after deducting the fee
-    const amountToAirdrop = 100; // Define the initial amount to be airdropped
-    const finalAmountToAirdrop = amountToAirdrop - transactionFeeVRT;
-
-    if (tokenToAirdrop.balance < finalAmountToAirdrop) {
-      return res.status(400).json({ error: 'Insufficient token balance for airdrop.' });
-    }
-
-    tokenToAirdrop.balance -= finalAmountToAirdrop;
-    await tokenToAirdrop.save();
-
-    // Increment the recipient's token account balance
-    recipientAccount.balance += finalAmountToAirdrop;
-    recipientAccount.airdropReceived = true;
-    await recipientAccount.save();
-
-    res.status(200).json({ message: 'Airdrop successful.' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-
-
-
 
 
 module.exports = router;
