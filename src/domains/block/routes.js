@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Block = require("./model");
+const Transaction = require('../transaction/model');
+const nacl = require('tweetnacl');
+const bs58 = require('bs58');
+const MAX_TRANSACTIONS_PER_BLOCK = 4
 
 // get all blocks
 router.get("/", async (req, res, next) => {
@@ -11,6 +15,9 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
+
+
+
 
 // create genesis block
 router.post("/genesis", async (req, res, next) => {

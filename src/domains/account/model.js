@@ -21,11 +21,15 @@ const accountSchema = new mongoose.Schema({
     ref: 'TokenAccount',
     required: true
   }],
-  vrtAccount: {
+  transactions: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'VRTAccount',
-    required: true
-  },
+    ref: 'Transaction',
+  }],
+  vrtBalance: {
+    type: Number, 
+    default: 0,  
+    required: true,
+  }
 });
 
 const Account = mongoose.model('Account', accountSchema);

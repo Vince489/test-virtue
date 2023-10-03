@@ -5,7 +5,7 @@ const transactionSchema = new mongoose.Schema({
   sender: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'TokenAccount',
+      ref: 'Account',
     },
     publicKey: {
       type: String,
@@ -15,7 +15,7 @@ const transactionSchema = new mongoose.Schema({
   recipient: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'TokenAccount',
+      ref: 'Account',
     },
     publicKey: {
       type: String,

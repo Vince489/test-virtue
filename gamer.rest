@@ -1,0 +1,48 @@
+// signup
+POST http://localhost:4400/api/v1/gamer/signup
+Content-Type: application/json
+
+{
+  "gamerTag": "Vince",
+  "email": "vincentcornelius489@gmail.com",
+  "password": "12345678"
+}
+
+###
+// verify email
+POST http://localhost:4400/api/v1/email_verification/verify
+Content-Type: application/json
+
+{
+  "email": "vincentcornelius489@gmail.com",
+  "otp": "8641"
+}
+
+###
+// forgot password
+POST http://localhost:4400/api/v1/forgot_password/
+Content-Type: application/json
+
+{
+  "email": "lamaranthonyholdings@gmail.com"
+}
+
+###
+// password reset
+POST http://localhost:4400/api/v1/forgot_password/reset
+Content-Type: application/json
+
+{
+  "email": "lamaranthonyholdings@gmail.com",
+  "otp": "3446",
+  "newPassword": "12345678"
+}
+
+###
+// Request new OTP
+POST http://localhost:4400/api/v1/otp/request-new-otp
+Content-Type: application/json
+
+{
+  "email": "lamaranthonyholdings@gmail.com"
+}

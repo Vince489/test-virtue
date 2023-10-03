@@ -1,84 +1,80 @@
 const express = require('express');
 const router = express.Router();
-const VRTAccount = require('../vrtAccount/model');
-const Transaction = require('../transaction/model');
-const nacl = require('tweetnacl');
-const bs58 = require('bs58');
-const { getSenderPrivateKey } = require('./controller.js');
+const Account = require('../account/model');
+const VRT = require('../VRT/model');
+const Transaction = require('./model');
 
 
-// POST endpoint for transferring funds between accounts
-router.post('/transfer', async (req, res) => {
+// Transfer VRT token from one account to another
+router.post("/transfer", async (req, res, next) => {
   try {
-    // Extract the necessary information from the request body
-    const { senderPublicKey, recipientPublicKey, amount, privateKey } = req.body;
+    const { senderPublicKey, recipientPublicKey, amount } = req.body;
 
-    // Check if the amount is a whole number
-    if (Math.round(amount) !== amount) {
-      return res.status(400).json({ error: 'Amount must be a whole number.' });
+    // Find the sender's account using their publicKey
+    const senderAccount = await Account.findOne({ publicKey: senderPublicKey });
+
+    if (!senderAccount) {
+      return res.status(404).json({ message: "Sender not found" });
     }
 
-    if (senderPublicKey === recipientPublicKey) {
-      return res.status(400).json({ error: 'Cannot transfer funds to your own account.' });
+    // Find the recipient's account using their publicKey
+    const recipientAccount = await Account.findOne({ publicKey: recipientPublicKey });
+
+    if (!recipientAccount) {
+      return res.status(404).json({ message: "Recipient not found" });
     }
 
-    if (amount < 0) {
-      return res.status(400).json({ error: 'Amount cannot be negative.' });
+    // Retrieve the VRT token from the database
+    const coinToTransfer = await VRT.findOne({ symbol: "VRT" });
+
+    if (!coinToTransfer) {
+      return res.status(404).json({ message: "VRT token not found" });
     }
 
-    const fromAccount = await VRTAccount.findOne({ owner: senderPublicKey });
-    const toAccount = await VRTAccount.findOne({ owner: recipientPublicKey });
-
-    if (!fromAccount || !toAccount) {
-      return res.status(404).json({ error: 'VRTAccount not found.' });
+    // Deduct the transfer amount from the sender's VRT balance
+    if (senderAccount.vrtBalance < amount) {
+      return res.status(400).json({ message: "Insufficient VRT balance for transfer" });
     }
 
-    if (fromAccount.balance < amount) {
-      return res.status(400).json({ error: 'Insufficient funds.' });
-    }
+    // Deduct the transfer amount from the sender's VRT balance
+    senderAccount.vrtBalance -= amount;
+    await senderAccount.save();
 
-    const transaction = new Transaction({
-      sender: { publicKey: senderPublicKey },
-      recipient: { publicKey: recipientPublicKey },
+    // Increment the recipient's VRT balance
+    recipientAccount.vrtBalance += amount;
+    await recipientAccount.save();
+
+    // Create a new transaction
+    const newTransaction = new Transaction({
+      sender: {
+        id: senderAccount._id,
+        publicKey: senderPublicKey,
+      },
+      recipient: {
+        id: recipientAccount._id,
+        publicKey: recipientPublicKey,
+      },
       amount: amount,
+      signature: 'your_signature_here', // You need to specify a valid signature
     });
 
-    // Convert transaction data to a Uint8Array
-    const transactionData = Buffer.from(JSON.stringify(transaction));
+    // Save the transaction to the database
+    await newTransaction.save();
 
-    // Convert the private key from base58 to bytes
-    const privateKeyBytes = bs58.decode(privateKey);
-    const privateKeyUint8 = new Uint8Array(privateKeyBytes);
+    // Push the transaction ID to the sender's and recipient's transaction arrays
+    senderAccount.transactions.push(newTransaction._id);
+    recipientAccount.transactions.push(newTransaction._id);
 
-    // Sign the transaction data using the private key
-    const signature = nacl.sign.detached(transactionData, privateKeyUint8);
+    // Save the sender and recipient accounts again to update their transaction arrays
+    await senderAccount.save();
+    await recipientAccount.save();
 
-    // Convert the signature to a base58 encoded string
-    const signatureString = bs58.encode(signature);
-
-    // Attach the signature to the transaction object
-    transaction.signature = signatureString;
-
-    await transaction.save();
-
-    fromAccount.transactions.push(transaction._id);
-    fromAccount.balance -= Number(amount); // Subtract the transfer amount
-
-    toAccount.transactions.push(transaction._id);
-    toAccount.balance += Number(amount); // Add the transfer amount
-
-    await fromAccount.save();
-    await toAccount.save();
-
-    const populatedTransaction = await Transaction.findById(transaction._id)
-      .populate('sender', 'owner')
-      .populate('recipient', 'owner')
-      .exec();
-
-    res.status(200).json({ message: 'Balance transfer successful.', transaction: populatedTransaction });
+    // Respond with the updated VRT balance
+    res.status(200).json({ message: "Transfer successful", vrtBalance: senderAccount.vrtBalance });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
+
 
 module.exports = router;

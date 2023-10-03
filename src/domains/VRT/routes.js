@@ -35,35 +35,101 @@ router.post("/airdrop", async (req, res, next) => {
   try {
     const { publicKey } = req.body;
 
-    // Use .populate() to retrieve the associated VRT account
-    const userAccount = await Account.findOne({ publicKey }).populate("vrtAccount").exec();
+    // Find the user's account using their publicKey
+    const userAccount = await Account.findOne({ publicKey });
 
     if (!userAccount) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // deduct the amount from the VRT balance
+    // Retrieve the current VRT balance from the database
     const coinToAirdrop = await VRT.findOne({ symbol: "VRT" });
+
     if (!coinToAirdrop) {
       return res.status(404).json({ message: "VRT token not found" });
     }
-    const amount = 100;
+
+    // Deduct the airdrop amount from the VRT balance
+    const amount = 100; 
     if (coinToAirdrop.balance < amount) {
       return res.status(400).json({ message: "Insufficient VRT balance for airdrop" });
     }
+
+    // Deduct the airdrop amount from the VRT balance
     coinToAirdrop.balance -= amount;
     await coinToAirdrop.save();
 
-    //increment the user's VRT balance
-    userAccount.vrtAccount.balance += amount;
-    await userAccount.vrtAccount.save();
+    // Increment the user's VRT balance within their account
+    userAccount.vrtBalance += amount;
+    await userAccount.save();
 
-    // Respond with the updated VRT account data
-    res.status(200).json(userAccount.vrtAccount);
+    // Respond with the updated VRT balance
+    res.status(200).json({ message: "Airdrop successful", vrtBalance: userAccount.vrtBalance });
   } catch (error) {
     next(error);
   }
 });
+
+// Get all VRT tokens
+router.get("/", async (req, res, next) => {
+  try {
+    // Retrieve all VRT tokens from the database
+    const allVRT = await VRT.find();
+
+    // Respond with the retrieved VRT tokens
+    res.status(200).json(allVRT);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// freeze VRT token
+router.post("/freeze/:symbol", async (req, res, next) => {
+  try {
+    const { symbol } = req.params;
+
+    // Retrieve the VRT token from the database
+    const vrtToken = await VRT.findOne({ symbol });
+
+    if (!vrtToken) {
+      return res.status(404).json({ message: "VRT token not found" });
+    }
+
+    // Freeze the VRT token
+    vrtToken.frozen = true;
+    await vrtToken.save();
+
+    // Respond with the updated VRT token
+    res.status(200).json(vrtToken);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// unfreeze VRT token
+router.post("/unfreeze/:symbol", async (req, res, next) => {
+  try {
+    const { symbol } = req.params;
+
+    // Retrieve the VRT token from the database
+    const vrtToken = await VRT.findOne({ symbol });
+
+    if (!vrtToken) {
+      return res.status(404).json({ message: "VRT token not found" });
+    }
+
+    // Freeze the VRT token
+    vrtToken.frozen = false;
+    await vrtToken.save();
+
+    // Respond with the updated VRT token
+    res.status(200).json(vrtToken);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 
 
 

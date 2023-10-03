@@ -8,35 +8,31 @@ POST http://localhost:4400/api/v1/account/
 Content-Type: application/json
 
 ###
-// get associated account
-GET http://localhost:4400/api/v1/account/HKhGxYvYucDaL2Yo7V6A8Jv6Gjd9ZE839LwJDJiuxe3B/
-
-###
-// get airdrop
-POST http://localhost:4400/api/v1/account/HKhGxYvYucDaL2Yo7V6A8Jv6Gjd9ZE839LwJDJiuxe3B/airdrop
-Content-Type: application/json
-
-
-
-###
-// get balance
-GET http://localhost:4400/api/v1/account/HKhGxYvYucDaL2Yo7V6A8Jv6Gjd9ZE839LwJDJiuxe3B/vrt-balance
-
-###
-// retrieve account by seed phrase
-POST http://localhost:4400/api/v1/account/transfer
+// get account info from seed phrase
+POST http://localhost:4400/api/v1/account/getAccount
 Content-Type: application/json
 
 {
-  "senderPublicKey": "HKhGxYvYucDaL2Yo7V6A8Jv6Gjd9ZE839LwJDJiuxe3B", 
-  "recipientPublicKey": "6SjZh1jJUenkqHCB3dNu7BhXDpmo3itygrBaKax5BWpg", 
-  "amount": "13.95"
+  "seedPhrase": "sea minute notice else renew absurd bonus caught bird garage kit poem"
 }
 
+###
+// get balance
+GET http://localhost:4400/api/v1/account/getBalance/4UpxViZy6ENFijvn3MfYfyAKLsTkHj1gJQaeUQMvqHY5
 
 ###
 // add VRT to db 
 POST http://localhost:4400/api/v1/vrt
+Content-Type: application/json
+
+###
+// freeze VRT
+POST http://localhost:4400/api/v1/vrt/freeze/VRT
+Content-Type: application/json
+
+###
+// unfreeze VRT
+POST http://localhost:4400/api/v1/vrt/unfreeze/VRT
 Content-Type: application/json
 
 ###
@@ -45,7 +41,7 @@ POST http://localhost:4400/api/v1/vrt/airdrop
 Content-Type: application/json
 
 {
-  "publicKey": "3wUBnsHUaaZBUKw5CBp6RNpxFrgxBQeJB4gUyapsMYnx"
+  "publicKey": "3zkdWRZtdJyQEuj2kRaFK6tb3rMszGvDsv5upPEv87eC"
 }
 
 ###
@@ -95,11 +91,13 @@ POST http://localhost:4400/api/v1/transaction/transfer
 Content-Type: application/json
 
 {
-  "senderPublicKey": "5ubXf3orDt44tZ3Kd3fQxnhkPhYkKG5cWFA74tVvyAfW", 
-  "recipientPublicKey": "3wUBnsHUaaZBUKw5CBp6RNpxFrgxBQeJB4gUyapsMYnx", 
+  "senderPublicKey": "4UpxViZy6ENFijvn3MfYfyAKLsTkHj1gJQaeUQMvqHY5", 
+  "recipientPublicKey": "78ev7UqLj2trzZYRUKQsADhHPX42rV8CeXCwhQVta7nb", 
   "amount": 10, 
   "privateKey": "h5ZoEaUXsPP3WNNi3GugVM7TpuLpCZcvACuEyX9PHoZ9mLgjpATsk7Vz3emByVtSmVVKToVUApxDouQ62zMCuPi"
 }
+
+
 
 
 

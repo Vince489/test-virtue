@@ -5,7 +5,6 @@ const Keypair = require("./../../utils/keypair");
 const TokenAccount = require("./../tokenAccount/model");
 const Account = require("./model");
 const SeedPhrase = require("./../seedPhrase/model");
-const VRTAccount = require("./../vrtAccount/model");
 
 // get all accounts
 router.get("/", async (req, res, next) => {
@@ -42,19 +41,6 @@ router.post("/", async (req, res, next) => {
     // Generate a new public key for the token account
     const tokenAccountPublicKey = Keypair.generate().publicKey;
 
-    // Create a new TokenAccount associated with the VRT mint
-    const newNativeAccount = new VRTAccount({
-      owner: newAccount.publicKey, // Reference the saved account document
-      balance: 0, // Set the initial balance to zero
-      transactions: [],
-    });
-
-    // Save the new token account to the database
-    await newNativeAccount.save();
-
-    // Set the vrtAccount field of the new account to the ID of the new token account
-    newAccount.vrtAccount = newNativeAccount._id;
-
     // Save the new account to the database
     await newAccount.save();
 
@@ -71,95 +57,62 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// get account by public key
-router.get('/:publicKey', async (req, res, next) => {
-  try {
-    const { publicKey } = req.params;
-
-    // Use .populate() to retrieve the associated VRT account
-    const userAccount = await Account.findOne({ publicKey }).populate('vrtAccount').exec();
-    console.log(userAccount);
-
-    if (!userAccount) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.status(200).json({
-      publicKey: userAccount.publicKey,
-      vrtAccount: userAccount.vrtAccount, // Assuming vrtAccount is the populated field
-      // ...other user account properties
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
 // get vrt balance by public key
-router.get('/:publicKey/vrt-balance', async (req, res, next) => {
+router.get('/getBalance/:publicKey/', async (req, res, next) => {
   try {
     const { publicKey } = req.params;
 
-    // Use .populate() to retrieve the associated VRT account
-    const userAccount = await Account.findOne({ publicKey }).populate('vrtAccount').exec();
+    // Find the user's account using their publicKey
+    const userAccount = await Account.findOne({ publicKey });
 
     if (!userAccount) {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    // Retrieve the user's VRT balance from their account
+    const vrtBalance = userAccount.vrtBalance;
+
+    res.status(200).json({ vrtBalance });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// get account by seed phrase array from request body
+router.post("/getAccount", async (req, res, next) => {
+  try {
+    const { seedPhrase } = req.body;
+
+    // Find the seed phrase document using the seed phrase array
+    const seedPhraseDocument = await SeedPhrase.findOne({ seedPhrase });
+
+    if (!seedPhraseDocument) {
+      return res.status(404).json({ message: "Seed phrase not found" });
+    }
+
+    // Find the account associated with the seed phrase document
+    const account = await Account.findOne({ seedPhrase: seedPhraseDocument._id });
+
+    if (!account) {
+      return res.status(404).json({ message: "Account not found" });
+    }
+
+    // Respond with the account data
     res.status(200).json({
-      publicKey: userAccount.publicKey,
-      Balance: userAccount.vrtAccount.balance, // Assuming vrtAccount is the populated field
+      publicKey: account.publicKey,
+      privateKey: account.privateKey,
     });
   } catch (error) {
     next(error);
   }
 });
 
-// Transfer tokens from one token account to another
-router.post("/transfer", async (req, res) => {
-  try {
-    const { senderPublicKey, recipientPublicKey, amount } = req.body; // Extract the sender's public key, recipient's public key, and amount from the request body
 
-    // Check if the sender's token account exists
-    const senderAccount = await TokenAccount.findOne({
-      owner: senderPublicKey,
-    });
+  
 
-    if (!senderAccount) {
-      return res.status(404).json({ error: "Sender token account not found." });
-    }
 
-    // Check if the recipient's token account exists
-    const recipientAccount = await TokenAccount.findOne({
-      owner: recipientPublicKey,
-    });
 
-    if (!recipientAccount) {
-      return res
-        .status(404)
-        .json({ error: "Recipient token account not found." });
-    }
 
-    // Check if the sender has sufficient token balance
-    if (senderAccount.balance < amount) {
-      return res
-        .status(400)
-        .json({ error: "Insufficient token balance for transfer." });
-    }
-
-    // Decrement the sender's token account balance
-    senderAccount.balance -= amount;
-    await senderAccount.save();
-
-    // Increment the recipient's token account balance
-    recipientAccount.balance += amount;
-    await recipientAccount.save();
-
-    res.status(200).json({ message: "Transfer successful." });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
 
 
 

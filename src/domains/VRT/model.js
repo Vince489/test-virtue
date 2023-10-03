@@ -9,7 +9,9 @@ const vrtSchema = new mongoose.Schema({
   symbol: {
     type: String,
     required: true,
-    default: 'VRT' // Symbol or ticker for the cryptocurrency
+    default: 'VRT', // Symbol or ticker for the cryptocurrency
+    unique: true
+
   },
   totalSupply: {
     type: Number,

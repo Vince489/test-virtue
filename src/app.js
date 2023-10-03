@@ -10,13 +10,11 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 const corsOptions = {
-  origin: ['https://planetvirtron.com', 'http://localhost:3000', 'http://localhost:3001'],
+  origin: ['https://planetvirtron.com', 'http://localhost:3000', 'http://localhost:4400'],
   credentials: true, // Allow credentials (cookies)
 };
 
 app.use(cors(corsOptions));
-
-
 app.use(express.json())
 app.use("/api/v1", routes);
 app.use(cookieParser());
