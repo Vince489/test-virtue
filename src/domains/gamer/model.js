@@ -27,7 +27,6 @@ const gamerSchema = new mongoose.Schema({
   account: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
-    unique: true
   },
   fighters: [{
     type: mongoose.Schema.Types.ObjectId,

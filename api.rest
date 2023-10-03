@@ -8,6 +8,18 @@ POST http://localhost:4400/api/v1/account/
 Content-Type: application/json
 
 ###
+// transfer VRT
+POST http://localhost:4400/api/v1/account/transfer
+Content-Type: application/json
+
+{
+  "senderPublicKey": "2DEPhPfrBUZ5ZdJAVwXE6MUssx5aFL5LSCvtZyw19FwA", 
+  "recipientPublicKey": "78ev7UqLj2trzZYRUKQsADhHPX42rV8CeXCwhQVta7nb", 
+  "amount": "25", 
+  "privateKey": "h5ZoEaUXsPP3WNNi3GugVM7TpuLpCZcvACuEyX9PHoZ9mLgjpATsk7Vz3emByVtSmVVKToVUApxDouQ62zMCuPi"
+}
+
+###
 // get account info from seed phrase
 POST http://localhost:4400/api/v1/account/getAccount
 Content-Type: application/json
@@ -51,7 +63,7 @@ Content-Type: application/json
 
 {
   "gamerTag": "gamer2",
-  "email": "gamer2@game.com",
+  "email": "vincentcornelius489@gmail.com",
   "password": "12345678"
 }
 
