@@ -53,7 +53,7 @@ POST http://localhost:4400/api/v1/vrt/airdrop
 Content-Type: application/json
 
 {
-  "publicKey": "3zkdWRZtdJyQEuj2kRaFK6tb3rMszGvDsv5upPEv87eC"
+  "publicKey": "GPBnBmPMocU5LezMp5oz167RyLUTD6xk6do4H7vPbFVC"
 }
 
 ###
@@ -62,7 +62,7 @@ POST http://localhost:4400/api/v1/gamer/signup
 Content-Type: application/json
 
 {
-  "gamerTag": "gamer2",
+  "gamerTag": "vince",
   "email": "vincentcornelius489@gmail.com",
   "password": "12345678"
 }
