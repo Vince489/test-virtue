@@ -1,3 +1,7 @@
+// Get all gamers
+GET http://localhost:4400/api/v1/gamer
+
+###
 // signup
 POST http://localhost:4400/api/v1/gamer/signup
 Content-Type: application/json

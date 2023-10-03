@@ -69,11 +69,12 @@ Content-Type: application/json
 
 ###
 // add account to gamer
-POST http://localhost:4400/api/v1/gamer/add-account/651b22a860a8eb45927c153e
+POST http://localhost:4400/api/v1/gamer/add-account
 Content-Type: application/json
 
 {
-  "accountId": "651b2332c026ff0182b82875"
+  "gamerTag": "Marvin",
+  "accountId": "651c52a6758d5be0fef7b571"
 }
 
 
