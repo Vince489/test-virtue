@@ -28,7 +28,7 @@ router.post("/signup", async (req, res) => {
 
       await createNewGamer({
         gamerTag,
-        email,
+        email, 
         password,
       });
 
@@ -66,7 +66,7 @@ router.post("/", async (req, res) => {
       httpOnly: true,
       sameSite: "None",
       secure: true,
-      expires: new Date(Date.now() + 3600000),
+      expires: new Date(Date.now() + 48 * 60 * 60 * 1000), // set expires to 48 hours from now
       path: '/'
     });
 

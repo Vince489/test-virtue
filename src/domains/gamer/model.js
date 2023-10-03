@@ -27,6 +27,7 @@ const gamerSchema = new mongoose.Schema({
   account: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
+    default: null,
   },
   fighters: [{
     type: mongoose.Schema.Types.ObjectId,
