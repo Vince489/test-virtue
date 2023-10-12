@@ -198,6 +198,7 @@ router.post('/logout', (req, res) => {
 router.post("/add-account", async (req, res, next) => {
   try {
     const { gamerTag, accountId } = req.body;
+    console.log(req.body);
 
     // Find the gamer's account based on their gamerTag
     const gamer = await Gamer.findOne({ gamerTag: gamerTag });
