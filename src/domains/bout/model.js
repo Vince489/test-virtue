@@ -25,7 +25,10 @@ const boutSchema = new mongoose.Schema({
   },
   venue: {
     type: String
-  }
+  },
+  purse: {
+    type: Number
+  },
 });
 
 const Bout = mongoose.model('Bout', boutSchema);

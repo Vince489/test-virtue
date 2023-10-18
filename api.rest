@@ -3,19 +3,26 @@ GET http://localhost:4400/api/v1/account
 
 
 ###
+// create new token account
+POST http://localhost:4400/api/v1/account
+Content-Type: application/json
+
+
+
+###
 // create a new account 
-POST http://localhost:4400/api/v1/account/
+POST http://localhost:4400/api/v1/account
 Content-Type: application/json
 
 ###
 // transfer VRT
-POST http://localhost:4400/api/v1/account/transfer
+POST http://localhost:4400/api/v1/transaction/transfer
 Content-Type: application/json
 
 {
-  "senderPublicKey": "2DEPhPfrBUZ5ZdJAVwXE6MUssx5aFL5LSCvtZyw19FwA", 
-  "recipientPublicKey": "78ev7UqLj2trzZYRUKQsADhHPX42rV8CeXCwhQVta7nb", 
-  "amount": "25", 
+  "senderPublicKey": "CQyz1ZBJ4jvZuTCC9KB2yRzU5R4V53b9n8sf8uCFsY2h", 
+  "recipientPublicKey": "C8vSQ2VamRTkZPMvHKc71bP4owbuLDMrnRHK2oSLnjLV", 
+  "amount": "2", 
   "privateKey": "h5ZoEaUXsPP3WNNi3GugVM7TpuLpCZcvACuEyX9PHoZ9mLgjpATsk7Vz3emByVtSmVVKToVUApxDouQ62zMCuPi"
 }
 
@@ -25,12 +32,14 @@ POST http://localhost:4400/api/v1/account/getAccount
 Content-Type: application/json
 
 {
-  "seedPhrase": "sea minute notice else renew absurd bonus caught bird garage kit poem"
+  "seedPhrase": "prefer donkey release pelican poverty air column angry circle soft fetch sunset"
 }
+
+
 
 ###
 // get balance
-GET http://localhost:4400/api/v1/account/getBalance/4UpxViZy6ENFijvn3MfYfyAKLsTkHj1gJQaeUQMvqHY5
+GET http://localhost:4400/api/v1/account/getBalance/CQyz1ZBJ4jvZuTCC9KB2yRzU5R4V53b9n8sf8uCFsY2h
 
 ###
 // add VRT to db 
@@ -53,7 +62,7 @@ POST http://localhost:4400/api/v1/vrt/airdrop
 Content-Type: application/json
 
 {
-  "publicKey": "GPBnBmPMocU5LezMp5oz167RyLUTD6xk6do4H7vPbFVC"
+  "publicKey": "CQyz1ZBJ4jvZuTCC9KB2yRzU5R4V53b9n8sf8uCFsY2h"
 }
 
 ###
@@ -66,17 +75,6 @@ Content-Type: application/json
   "email": "vincentcornelius489@gmail.com",
   "password": "12345678"
 }
-
-###
-// add account to gamer
-POST http://localhost:4400/api/v1/gamer/add-account
-Content-Type: application/json
-
-{
-  "gamerTag": "Marvin",
-  "accountId": "651c52a6758d5be0fef7b571"
-}
-
 
 
 ###
@@ -97,6 +95,10 @@ Content-Type: application/json
 POST http://localhost:4400/api/v1/block/genesis
 Content-Type: application/json
 
+###
+//get all transactions
+GET http://localhost:4400/api/v1/transaction
+
 
 ###
 // transfer VRT
@@ -104,11 +106,41 @@ POST http://localhost:4400/api/v1/transaction/transfer
 Content-Type: application/json
 
 {
-  "senderPublicKey": "4UpxViZy6ENFijvn3MfYfyAKLsTkHj1gJQaeUQMvqHY5", 
-  "recipientPublicKey": "78ev7UqLj2trzZYRUKQsADhHPX42rV8CeXCwhQVta7nb", 
-  "amount": 10, 
+  "senderPublicKey": "CQyz1ZBJ4jvZuTCC9KB2yRzU5R4V53b9n8sf8uCFsY2h", 
+  "recipientPublicKey": "C8vSQ2VamRTkZPMvHKc71bP4owbuLDMrnRHK2oSLnjLV", 
+  "amount": 2, 
   "privateKey": "h5ZoEaUXsPP3WNNi3GugVM7TpuLpCZcvACuEyX9PHoZ9mLgjpATsk7Vz3emByVtSmVVKToVUApxDouQ62zMCuPi"
 }
+
+
+###
+// updat a fighter's stats
+PUT http://localhost:4400/api/v1/fighter/:id
+Content-Type: application/json
+
+{
+  "wins": 1,
+  "losses": 0,
+  "draws": 0,
+
+}
+
+###
+// create new gaming token
+POST http://localhost:4400/api/v1/token
+Content-Type: application/json
+
+{
+    "address":"bRT1jCHNK5nb46R4tpkhgVX7GnwMTrSLZTfrxacpHACP",
+    "uri":"https://virtronesports.com/img/IBFBelt.png",
+    "symbol": "BNV",
+    "name": "Boxing Nation Virtron",
+    "mintAuthority": "7T6C4Es9QhcWMEVXvPpsnyzvrPj2SYUVvhgF49wRYg2e",
+    "freezeAuthority": "7T6C4Es9QhcWMEVXvPpsnyzvrPj2SYUVvhgF49wRYg2e",
+    "supply": "1000000000",
+    "balance": "1000000000",
+    "type": "Gaming Token"
+  }
 
 
 

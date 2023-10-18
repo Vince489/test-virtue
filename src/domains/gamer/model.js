@@ -15,15 +15,6 @@ const gamerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  verified: { 
-    type: Boolean, 
-    default: false 
-  },
-  signupDate: {
-    type: Date,
-    required: true,
-    default: Date.now,
-  },
   account: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
@@ -33,6 +24,15 @@ const gamerSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Fighter',
   }],
+  verified: { 
+    type: Boolean, 
+    default: false 
+  },
+  signupDate: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
 });
 
 const Gamer = mongoose.model('Gamer', gamerSchema);

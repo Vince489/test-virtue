@@ -39,6 +39,10 @@ const fighterSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  earnings: {
+    type: Number,
+    default: 0,
+  },
   wins: {
     type: Number,
     default: 0,
@@ -94,7 +98,7 @@ const fighterSchema = new mongoose.Schema({
   promoter: {
     type: String,
   },
-  account: {
+  tokenAccount: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
   },

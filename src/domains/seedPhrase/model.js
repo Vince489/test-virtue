@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const seedPhraseSchema = new mongoose.Schema({
   seedPhrase: {
-    type: [String], 
+    type: String, 
     required: true,
     unique: true
   }

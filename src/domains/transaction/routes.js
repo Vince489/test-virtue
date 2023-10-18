@@ -3,6 +3,18 @@ const router = express.Router();
 const Account = require('../account/model');
 const VRT = require('../VRT/model');
 const Transaction = require('./model');
+const nacl = require('tweetnacl');
+
+
+// Get all transactions
+router.get("/", async (req, res, next) => {
+  try {
+    const transactions = await Transaction.find().select("sender recipient amount");
+    res.json(transactions);
+  } catch (error) {
+    next(error);
+  }
+});
 
 
 // Transfer VRT token from one account to another
@@ -22,13 +34,6 @@ router.post("/transfer", async (req, res, next) => {
 
     if (!recipientAccount) {
       return res.status(404).json({ message: "Recipient not found" });
-    }
-
-    // Retrieve the VRT token from the database
-    const coinToTransfer = await VRT.findOne({ symbol: "VRT" });
-
-    if (!coinToTransfer) {
-      return res.status(404).json({ message: "VRT token not found" });
     }
 
     // Deduct the transfer amount from the sender's VRT balance
@@ -55,7 +60,7 @@ router.post("/transfer", async (req, res, next) => {
         publicKey: recipientPublicKey,
       },
       amount: amount,
-      signature: 'your_signature_here', // You need to specify a valid signature
+      balance: senderAccount.vrtBalance, // Set the balance field in the transaction
     });
 
     // Save the transaction to the database
@@ -75,6 +80,9 @@ router.post("/transfer", async (req, res, next) => {
     next(error);
   }
 });
+
+
+
 
 
 module.exports = router;

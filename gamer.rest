@@ -1,5 +1,5 @@
 // Get all gamers
-GET http://localhost:4400/api/v1/gamer
+GET https://test-virtue-production.up.railway.app/api/v1/gamer
 
 ###
 // signup
@@ -7,8 +7,8 @@ POST http://localhost:4400/api/v1/gamer/signup
 Content-Type: application/json
 
 {
-  "gamerTag": "Vince",
-  "email": "vincentcornelius489@gmail.com",
+  "gamerTag": "Lamar",
+  "email": "lamaranthonyholdings@gmail.com",
   "password": "12345678"
 }
 
@@ -18,8 +18,18 @@ POST http://localhost:4400/api/v1/email_verification/verify
 Content-Type: application/json
 
 {
-  "email": "vincentcornelius489@gmail.com",
-  "otp": "8641"
+  "email": "lamaranthonyholdings@gmail.com",
+  "otp": "5077"
+}
+
+###
+// login
+POST http://localhost:4400/api/v1/gamer
+Content-Type: application/json
+
+{
+  "gamerTag": "Lamar",
+  "password": "12345678"
 }
 
 ###
@@ -32,7 +42,7 @@ Content-Type: application/json
 }
 
 ###
-// password reset
+// Password reset
 POST http://localhost:4400/api/v1/forgot_password/reset
 Content-Type: application/json
 
@@ -49,4 +59,14 @@ Content-Type: application/json
 
 {
   "email": "lamaranthonyholdings@gmail.com"
+}
+
+###
+// add account to gamer
+POST https://test-virtue-production.up.railway.app/api/v1/gamer/add-account
+Content-Type: application/json
+
+{
+  "gamerTag": "Me",
+  "accountId": "652754987ca684c9008cd21c"
 }

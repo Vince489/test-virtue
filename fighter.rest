@@ -1,0 +1,23 @@
+// Add a new fighter
+POST http://localhost:4400/api/v1/fighter
+Content-Type: application/json
+
+{
+    "gamerTag":"Hail Darulah",
+    "firstName": "Ah",
+    "lastName": "Darulah",
+    "nickname": "Lights Out",
+    "image": "https://virtronesports.com/img/Ah.jpg",
+    "heightFt": "5",
+    "heightIn": "11",
+    "reach": "76",
+    "stance": "Orthodox",
+    "weightClass": "Middleweight",
+    "ovr": "83",
+    "residence": "Queens",
+    "nationality": "American",
+    "manager": "Damon J. Keith",
+    "trainer": "UNKNOWN",
+    "gym": "KANO Boxing",
+    "promoter": "MetaBox Promotions"
+}

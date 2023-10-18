@@ -26,9 +26,12 @@ const transactionSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  balance: {
+    type: Number,
+    required: true,
+  },
   signature: {
     type: String,
-    required: true,
   },    
   timestamp: {
     type: Date,

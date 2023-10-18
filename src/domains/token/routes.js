@@ -3,8 +3,10 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const Token = require("./model");
 
+
+
 // Create token 
-router.post('/', auth, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     // Validate input data
     const { address, uri, symbol, name, mintAuthority, freezeAuthority, decimals, supply, balance, type } = req.body;
@@ -44,6 +46,9 @@ router.post('/', auth, async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+module.exports = router;
 
 
 module.exports = router;

@@ -5,16 +5,20 @@ const Keypair = require("./../../utils/keypair");
 const Account = require("./model");
 const SeedPhrase = require("./../seedPhrase/model");
 const Transaction = require("./../transaction/model");
+const { encryptData, decryptData } = require("./../../utils/encrypt-decrypt");
+require("dotenv").config();
+const secret = process.env.SECRET_KEY;
 
 // get all accounts
 router.get("/", async (req, res, next) => {
   try {
-    const accounts = await Account.find();
+    const accounts = await Account.find().select("publicKey tokenAccounts transactions vrtBalance");
     res.json(accounts);
   } catch (error) {
     next(error);
   }
 });
+
 
 // Create a new account with an associated token account
 router.post("/", async (req, res, next) => {
@@ -97,7 +101,7 @@ router.post("/transfer", async (req, res, next) => {
       return res.status(404).json({ message: "Recipient not found" });
     }
 
-     // Deduct the transfer amount from the sender's VRT balance
+    // Deduct the transfer amount from the sender's VRT balance
     if (senderAccount.vrtBalance < amount) {
       return res.status(400).json({ message: "Insufficient VRT balance for transfer" });
     }
@@ -120,8 +124,7 @@ router.post("/transfer", async (req, res, next) => {
         id: recipientAccount._id,
         publicKey: recipientPublicKey,
       },
-      amount: amount,
-      signature: 'your_signature_here', // You need to specify a valid signature
+      amount: amount
     });
 
     // Save the transaction to the database

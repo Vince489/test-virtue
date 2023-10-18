@@ -6,14 +6,11 @@ const tokenAccountSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  address: {
-    type: String,
-    required: true
-  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Account', // Reference to the user's Account
+    ref: 'Account', 
     required: true,
+    default: null
   },
   balance: {
     type: Number,
