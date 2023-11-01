@@ -9,6 +9,7 @@ const { encryptData, decryptData } = require("./../../utils/encrypt-decrypt");
 require("dotenv").config();
 const secret = process.env.SECRET_KEY;
 
+
 // get all accounts
 router.get("/", async (req, res, next) => {
   try {
@@ -40,10 +41,7 @@ router.post("/", async (req, res, next) => {
       seedPhrase: newSeedPhrase._id, // Reference the saved seed phrase document
       publicKey: keypair.publicKey,
       privateKey: keypair.privateKey,
-    });
-
-    // Generate a new public key for the token account
-    const tokenAccountPublicKey = Keypair.generate().publicKey;
+    }); 
 
     // Save the new account to the database
     await newAccount.save();

@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const Token = require("./model");
+const Keypair = require("./../../utils/keypair");
+
 
 
 
@@ -9,32 +11,37 @@ const Token = require("./model");
 router.post('/', async (req, res) => {
   try {
     // Validate input data
-    const { address, uri, symbol, name, mintAuthority, freezeAuthority, decimals, supply, balance, type } = req.body;
+    const { uri, symbol, name, mintAuthority, freezeAuthority, decimals, totalSupply, availableSupply, type } = req.body;
     
     // Perform validation checks, e.g., checking if required fields are present
 
-    if (!address || !symbol || !name) {
+    if (!symbol || !name) {
       return res.status(400).json({ error: 'Missing required fields.' });
     }
 
-    // Check if token already exists in the database with the same address, symbol, or name
-    const existingToken = await Token.findOne({ $or: [{ address }, { symbol }, { name }] });
+    // Generate a key pair using the Keypair library
+    const keypair = Keypair.generate();
+    const publicKey = keypair.publicKey;
+
+    // Check if token already exists in the database with the same publicKey, symbol, or name
+    const existingToken = await Token.findOne({ $or: [{ mint: publicKey }, { symbol }, { name }] });
+
 
     if (existingToken) {
       return res.status(400).json({ error: 'Token with the same address, symbol, or name already exists.' });
-    }
+    }    
 
     // Create the token
     const token = new Token({
-      address,
+      mint: publicKey,
+      address: publicKey,
       uri,
       symbol,
       name,
       mintAuthority,
       freezeAuthority,
       decimals,
-      supply,
-      balance,
+      totalSupply,
       type
     });
 
@@ -51,4 +58,3 @@ router.post('/', async (req, res) => {
 module.exports = router;
 
 
-module.exports = router;

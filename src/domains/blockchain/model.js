@@ -21,7 +21,7 @@ const blockchainSchema = new mongoose.Schema({
   },
   consensusRules: {
     consensusAlgorithm: 'Proof of Stake',
-    maxValidators: 50,
+    maxValidators: 30,
     proposalThreshold: 75, // Percentage of validator approval required for protocol changes
     upgradeProtocol: 'BFT', // The protocol used for upgrades
   },  

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const crypto = require('crypto');
 
 const blockSchema = new mongoose.Schema({
   timeStamp: {
@@ -10,7 +11,7 @@ const blockSchema = new mongoose.Schema({
     type: Number,
     index: true,
     required: true,
-    default: 0
+    default: 1
   },
   hash: {
     type: String,
@@ -35,6 +36,15 @@ const blockSchema = new mongoose.Schema({
     type: String,
     // required: true
   }
+});
+
+blockSchema.pre('save', function (next) {
+  // Create a hash based on the properties of the block
+  const dataToHash = this.timeStamp + this.blockHeight + this.previousHash;
+  const hash = crypto.createHash('sha256').update(dataToHash).digest('hex');
+  this.hash = hash; // Set the hash field in the schema
+
+  next();
 });
 
 const Block = mongoose.model('Block', blockSchema);

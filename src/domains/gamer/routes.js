@@ -9,6 +9,25 @@ const verifyToken = require('../../middleware/auth');
 const Account = require("./../account/model");
 
 
+// Endpoint to add a new gamer
+router.post('/add-gamer', async (req, res) => {
+  try {
+    const { gamerTag, email, password } = req.body;
+
+    // Create a new gamer instance
+    const newGamer = new Gamer({ gamerTag, email, password });
+
+    // Save the new gamer to the database
+    const savedGamer = await newGamer.save();
+
+    res.json(savedGamer);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to add a new gamer.' });
+  }
+});
+
+
 // Sign-up route
 router.post("/signup", async (req, res) => {
   try {
@@ -77,8 +96,7 @@ router.post("/", async (req, res) => {
     });
     } catch (error) {
       // Log the error for debugging
-    console.error("Authentication error:", error);
-
+      console.error(error);
     // Send a generic error message to the client
     res.status(400).json({ message: "Authentication failed" });
   }
@@ -91,74 +109,6 @@ router.get("/", async (req, res) => {
     res.json(gamers);
   } catch (error) {
     res.status(500).json({ message: error });
-  }
-});
-
-// new auth route
-router.get('/authenticate2', verifyToken, async (req, res) => {
-  try {
-    // Access the authenticated user's data from the req.user object
-    const userData = req.user;
-
-    // Find the gamer in the database using the gamer's unique identifier
-    const gamer = await Gamer.findOne({ gamerTag: userData.gamerTag });
-
-    if (!gamer) {
-      return res.status(404).json({ error: 'Gamer not found' });
-    }
-
-    // You can customize the gamer data that you want to send to the frontend
-    const gamerDataForFrontend = {
-      gamerTag: gamer.gamerTag,
-      email: gamer.email,
-      // Add other properties as needed
-    };
-
-    res.status(200).json(gamerDataForFrontend);
-  } catch (error) {
-    res.status(500).json({ error: 'An error occurred during authentication.' });
-  }
-});
-
-// Authenticate route
-router.get('/authenticate', auth, async (req, res) => {
-  try {
-    // access the authenticated gamer via req.user
-    const gamer = req.user;
-
-    res.status(200).json(gamer);
-  } catch (error) {
-    res.status(500).json({ error: 'An error occurred during authentication.' });
-  }
-});
-
-// say hello to the user
-router.get('/hello', auth, (req, res) => {
-  try {
-    res.status(200).json({ message: 'Hello, gamer Boy!' });
-  } catch (error) {
-    res.status(500).json({ error: 'An error occurred during authentication.' });
-  }
-});
-
-router.get("/dashboard", auth, async (req, res) => {
-  try {
-    // access the authenticated gamer via req.user
-    const gamer = req.user;
-    console.log(gamer);
-
-    res.status(200).json(gamer);
-  } catch (error) {
-    res.status(500).json({ error: "An error occurred during authentication." });
-  }
-})
-
-// protected route
-router.get("/protected", auth, (req, res) => {
-  try {
-    res.status(200).json({ message: "You are authorized to access this route." });
-  } catch (error) {
-    res.status(500).json({ error: "An error occurred during authentication." });
   }
 });
 

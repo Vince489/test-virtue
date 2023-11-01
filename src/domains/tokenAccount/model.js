@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const tokenAccountSchema = new mongoose.Schema({
   mint: {
     type: String,
-    required: true
+    required: true,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

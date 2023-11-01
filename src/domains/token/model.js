@@ -2,6 +2,10 @@
 const mongoose = require('mongoose');
 
 const tokenSchema = new mongoose.Schema({
+  mint: {
+    type: String,
+    required: true,
+  },
   address: {
     type: String,
     required: true,
@@ -20,23 +24,21 @@ const tokenSchema = new mongoose.Schema({
   },
   mintAuthority: {
     type: String,
-    required: true,
   },
   freezeAuthority: {
     type: String,
-    required: true,
   },
-  supply: {
-    type: Number,
-    required: true,
-  },
-  balance: {
+  totalSupply: {
     type: Number,
     required: true,
   },
   type: {
     type: String,
-    required: true,
+    default: 'Gaming',
+  },
+  decimals: {
+    type: Number,
+    default: 8,
   },
 });
 

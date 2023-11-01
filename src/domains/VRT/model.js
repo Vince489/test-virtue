@@ -18,7 +18,7 @@ const vrtSchema = new mongoose.Schema({
     required: true,
     default: 1000000000 // Total supply of VRT
   },
-  balance: {
+  availableSupply: {
     type: Number,
     default: 1000000000
   },

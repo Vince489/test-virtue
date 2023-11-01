@@ -19,7 +19,6 @@ const accountSchema = new mongoose.Schema({
   tokenAccounts: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'TokenAccount',
-    required: true
   }],
   transactions: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -29,7 +28,11 @@ const accountSchema = new mongoose.Schema({
     type: Number, 
     default: 0,  
     required: true,
-  }
+  },
+  stake: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Stake', // Reference to the associated stake
+  },  
 });
 
 const Account = mongoose.model('Account', accountSchema);
