@@ -1,30 +1,11 @@
 // get all accounts
-GET http://localhost:4400/api/v1/account
-
-
-###
-// create new token account
-POST http://localhost:4400/api/v1/account
-Content-Type: application/json
-
+GET http://localhost:4400/api/v1/account 
 
 
 ###
 // create a new account 
 POST http://localhost:4400/api/v1/account
 Content-Type: application/json
-
-###
-// transfer VRT
-POST http://localhost:4400/api/v1/transaction/transfer
-Content-Type: application/json
-
-{
-  "senderPublicKey": "CQyz1ZBJ4jvZuTCC9KB2yRzU5R4V53b9n8sf8uCFsY2h", 
-  "recipientPublicKey": "C8vSQ2VamRTkZPMvHKc71bP4owbuLDMrnRHK2oSLnjLV", 
-  "amount": "2", 
-  "privateKey": "h5ZoEaUXsPP3WNNi3GugVM7TpuLpCZcvACuEyX9PHoZ9mLgjpATsk7Vz3emByVtSmVVKToVUApxDouQ62zMCuPi"
-}
 
 ###
 // get account info from seed phrase
@@ -39,7 +20,7 @@ Content-Type: application/json
 
 ###
 // get balance
-GET http://localhost:4400/api/v1/account/getBalance/CQyz1ZBJ4jvZuTCC9KB2yRzU5R4V53b9n8sf8uCFsY2h
+GET http://localhost:4400/api/v1/account/getBalance/7VaGyYw7LAuFgEy9YCDb1dSjNfo5FwvhmbzBU81KYwU8
 
 ###
 // add VRT to db 
@@ -58,11 +39,12 @@ Content-Type: application/json
 
 ###
 // airdrop VRT 
-POST http://localhost:4400/api/v1/vrt/airdrop
+POST http://localhost:4400/api/v1/vrt/airdrop2
 Content-Type: application/json
 
 {
-  "publicKey": "CQyz1ZBJ4jvZuTCC9KB2yRzU5R4V53b9n8sf8uCFsY2h"
+  "amount": 20000,
+  "publicKey": "Yb5QR4vog5Ep8m46PSWkYB5oWDSQmkNQukK2YSpvoiP"
 }
 
 ###
@@ -90,10 +72,6 @@ GET http://localhost:4400/api/v1/block
 POST http://localhost:4400/api/v1/block
 Content-Type: application/json
 
-###
-// create genesis block
-POST http://localhost:4400/api/v1/block/genesis
-Content-Type: application/json
 
 ###
 //get all transactions
@@ -106,15 +84,20 @@ POST http://localhost:4400/api/v1/transaction/transfer
 Content-Type: application/json
 
 {
-  "senderPublicKey": "CQyz1ZBJ4jvZuTCC9KB2yRzU5R4V53b9n8sf8uCFsY2h", 
-  "recipientPublicKey": "C8vSQ2VamRTkZPMvHKc71bP4owbuLDMrnRHK2oSLnjLV", 
-  "amount": 2, 
-  "privateKey": "h5ZoEaUXsPP3WNNi3GugVM7TpuLpCZcvACuEyX9PHoZ9mLgjpATsk7Vz3emByVtSmVVKToVUApxDouQ62zMCuPi"
+  "senderPublicKey": "7VaGyYw7LAuFgEy9YCDb1dSjNfo5FwvhmbzBU81KYwU8", 
+  "recipientPublicKey": "3E733XdigvbrU7stuJu75F3y3nb5CpCa3YVtLV9ZAEDW", 
+  "amount": 23
 }
+
+###
+// Get transaction by id
+
+GET http://localhost:4400/api/v1/transaction/6541067af67fdb0dd70062dc
+
 
 
 ###
-// updat a fighter's stats
+// update a fighter's stats
 PUT http://localhost:4400/api/v1/fighter/:id
 Content-Type: application/json
 
@@ -131,16 +114,46 @@ POST http://localhost:4400/api/v1/token
 Content-Type: application/json
 
 {
-    "address":"bRT1jCHNK5nb46R4tpkhgVX7GnwMTrSLZTfrxacpHACP",
     "uri":"https://virtronesports.com/img/IBFBelt.png",
-    "symbol": "BNV",
-    "name": "Boxing Nation Virtron",
-    "mintAuthority": "7T6C4Es9QhcWMEVXvPpsnyzvrPj2SYUVvhgF49wRYg2e",
-    "freezeAuthority": "7T6C4Es9QhcWMEVXvPpsnyzvrPj2SYUVvhgF49wRYg2e",
-    "supply": "1000000000",
-    "balance": "1000000000",
+    "symbol": "BiNV",
+    "name": "Boxing Naition Virtron",
+    "decimals": 6,
+    "mintAuthority": "7T6C4Eis9QhcWMEVXvPpsnyzvrPj2SYUVvhgF49wRYg2e",
+    "freezeAuthority": "7T6C4iEs9QhcWMEVXvPpsnyzvrPj2SYUVvhgF49wRYg2e",
+    "totalSupply": 1000000000,
     "type": "Gaming Token"
   }
+
+###
+// create new token account
+POST http://localhost:4400/api/v1/tokenAccount
+Content-Type: application/json
+
+{
+  "mint": "51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX",
+  "owner": "654295691209ceec11cb281a"
+}
+
+###
+// create new token account
+POST http://localhost:4400/api/v1/tokenAccount/add-token-account
+Content-Type: application/json
+
+{
+  "mint": "51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX",
+  "owner": "654295691209ceec11cb281a"
+}
+
+
+###
+// Add token account to gamer account
+POST http://localhost:4400/api/v1/tokenAccount/associate-token-account
+Content-Type: application/json
+
+{
+  "accountId": "654295691209ceec11cb281a",
+  "tokenAccountId": "6542a043e30ecf7cec384fa4"
+}
 
 
 

@@ -1,5 +1,26 @@
 // Get all gamers
-GET https://test-virtue-production.up.railway.app/api/v1/gamer
+GET http://localhost:4400/api/v1/gamer
+
+###
+// Add tokenAccount to gamer
+POST http://localhost:4400/api/v1/tokenAccount/add-token-account
+Content-Type: application/json
+
+{
+  "gamerTag": "johnny",
+  "mint": "51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX"
+}
+
+###
+// Add account to gamer
+POST http://localhost:4400/api/v1/gamer/add-gamer
+Content-Type: application/json
+
+{
+  "gamerTag": "johnny",
+  "email": "johnny@aol.com",
+  "password": "password"
+}
 
 ###
 // signup
@@ -19,7 +40,7 @@ Content-Type: application/json
 
 {
   "email": "lamaranthonyholdings@gmail.com",
-  "otp": "5077"
+  "otp": "4292"
 }
 
 ###
@@ -69,4 +90,14 @@ Content-Type: application/json
 {
   "gamerTag": "Me",
   "accountId": "652754987ca684c9008cd21c"
+}
+
+
+###
+POST http://localhost:4400/api/v1/tokenAccount
+Content-Type: application/json
+
+{
+  "mint": "0x000000",
+  "owner": "65412708a07c37ea474d57f1"
 }
