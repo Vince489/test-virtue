@@ -23,7 +23,7 @@ router.get("/", async (req, res, next) => {
 });
 
 
-// Transfer 3
+// Transfer VRT from one account to another
 router.post("/transfer", async (req, res, next) => {
   try {
     const { senderPublicKey, recipientPublicKey, amount } = req.body;

@@ -84,8 +84,8 @@ POST http://localhost:4400/api/v1/transaction/transfer
 Content-Type: application/json
 
 {
-  "senderPublicKey": "7VaGyYw7LAuFgEy9YCDb1dSjNfo5FwvhmbzBU81KYwU8", 
-  "recipientPublicKey": "3E733XdigvbrU7stuJu75F3y3nb5CpCa3YVtLV9ZAEDW", 
+  "senderPublicKey": "HA8gBN4rcspRtg1148CM4aLe55ZikiX3ZcL5JDPzmtjT", 
+  "recipientPublicKey": "992PcfcepEDhq6KggXkEYBvBmYgWebEH1KPtkAVzgjy4", 
   "amount": 23
 }
 

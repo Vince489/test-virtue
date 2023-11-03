@@ -1,0 +1,9 @@
+// add VRT to db 
+POST http://localhost:4400/api/v1/stake
+Content-Type: application/json
+
+{
+    "stakerPublicKey": "HA8gBN4rcspRtg1148CM4aLe55ZikiX3ZcL5JDPzmtjT",
+    "amount": 1110,
+    "lockupPeriod": 592001
+}

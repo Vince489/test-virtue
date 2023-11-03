@@ -20,7 +20,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-
 // Create a new account with an associated token account
 router.post("/", async (req, res, next) => {
   try {
@@ -167,6 +166,60 @@ router.post("/getAccount", async (req, res, next) => {
       publicKey: account.publicKey,
       privateKey: account.privateKey,
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Convert vrt to vrtx
+router.post("/convert", async (req, res, next) => {
+  try {
+    const { publicKey, amount } = req.body;
+
+    // Find the user's account using their publicKey
+    const userAccount = await Account.findOne({ publicKey });
+
+    if (!userAccount) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Deduct the conversion amount from the user's VRT balance
+    if (userAccount.vrtBalance < amount) {
+      return res.status(400).json({ message: "Insufficient VRT balance for conversion" });
+    }
+
+    // Deduct the conversion amount from the user's VRT balance
+    userAccount.vrtBalance -= amount;
+    await userAccount.save();
+
+    // Increment the user's VRTX balance
+    userAccount.vrtxBalance += amount;
+    await userAccount.save();
+
+    // Create a new transaction
+    const newTransaction = new Transaction({
+      sender: {
+        id: userAccount._id,
+        publicKey: publicKey,
+      },
+      recipient: {
+        id: userAccount._id,
+        publicKey: publicKey,
+      },
+      amount: amount
+    });
+
+    // Save the transaction to the database
+    await newTransaction.save();
+
+    // Push the transaction ID to the user's transaction array
+    userAccount.transactions.push(newTransaction._id);
+
+    // Save the user account again to update their transaction array
+    await userAccount.save();
+
+    // Respond with the updated VRT balance
+    res.status(200).json({ message: "Conversion successful", vrtBalance: userAccount.vrtBalance });
   } catch (error) {
     next(error);
   }

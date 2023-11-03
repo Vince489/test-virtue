@@ -29,13 +29,19 @@ const accountSchema = new mongoose.Schema({
     default: 0,  
     required: true,
   },
-  stake: {
+  stake: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Stake', // Reference to the associated stake
-  },  
+  }],  
 });
 
 const Account = mongoose.model('Account', accountSchema);
 
 module.exports = Account;
+
+
+
+
+
+
 

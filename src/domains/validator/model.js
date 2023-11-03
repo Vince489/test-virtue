@@ -6,12 +6,14 @@ const validatorSchema = new mongoose.Schema({
     required: true,
     unique: true, // Each validator's address should be unique
   },
-  publicKey: {
-    type: String,
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Account', 
     required: true,
   },
   stake: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Stake', // Reference to the associated stake
     required: true,
   },
   active: {

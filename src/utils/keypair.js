@@ -11,7 +11,7 @@ class Keypair {
       this.publicKey = bs58.encode(publicKey);
       this.privateKey = bs58.encode(secretKey);
     } catch (error) {
-      throw new Error(`Could not generate keypair: ${error.message}`);
+      throw new Error(`Could not generate key pair: ${error.message}`);
     }
   }
 
@@ -19,7 +19,7 @@ class Keypair {
     try {
       return new Keypair();
     } catch (error) {
-      throw new Error('Failed to generate key pair: ' + error.message);
+      throw new Error(`Failed to generate key pair: ${error.message}`);
     }
   }
 

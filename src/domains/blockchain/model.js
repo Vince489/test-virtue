@@ -3,6 +3,10 @@
 const mongoose = require('mongoose');
 
 const blockchainSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    default: 'DevChain',
+  },
   blocks: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Block',
@@ -21,7 +25,7 @@ const blockchainSchema = new mongoose.Schema({
   },
   consensusRules: {
     consensusAlgorithm: 'Proof of Stake',
-    maxValidators: 30,
+    maxValidators: 20,
     proposalThreshold: 75, // Percentage of validator approval required for protocol changes
     upgradeProtocol: 'BFT', // The protocol used for upgrades
   },  

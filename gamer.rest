@@ -49,7 +49,7 @@ POST http://localhost:4400/api/v1/gamer
 Content-Type: application/json
 
 {
-  "gamerTag": "Lamar",
+  "gamerTag": "vince",
   "password": "12345678"
 }
 
@@ -101,3 +101,9 @@ Content-Type: application/json
   "mint": "0x000000",
   "owner": "65412708a07c37ea474d57f1"
 }
+
+###
+POST http://localhost:4400/api/v1/gamer/dashboard
+Content-Type: application/json
+
+  

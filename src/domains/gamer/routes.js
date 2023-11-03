@@ -5,7 +5,7 @@ const auth = require("./../../middleware/auth");
 const { sendVerificationOTPEmail } = require("./../email_verification/controller");
 const createJWT = require("../../utils/createJWT");
 const Gamer = require("./model");
-const verifyToken = require('../../middleware/auth');
+const { verifyToken, checkDashboardAccess } = require('../../middleware/auth');
 const Account = require("./../account/model");
 
 
@@ -176,6 +176,17 @@ router.post("/add-account", async (req, res, next) => {
   } catch (error) {
     console.error(error); // Log the error for debugging
     next(error);
+  }
+});
+
+// Go to dashboard
+router.get("/dashboard", verifyToken, checkDashboardAccess, async (req, res) => {
+  try {
+    const gamer = await Gamer.findById(req.gamer.gamerId);
+    res.status(200).json({ gamer }).populate('account');
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

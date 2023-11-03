@@ -15,6 +15,7 @@ const ForgotPasswordRoutes = require("./../domains/forgot_password");
 const TokenRoutes = require("./../domains/token");
 const VRTRoutes = require("./../domains/VRT");
 const FighterRoutes = require("./../domains/fighter");
+const StakeRoutes = require("./../domains/stake");
 
 router.use("/account", AccountRoutes);
 router.use("/tokenAccount", TokenAccountRoutes);
@@ -31,5 +32,6 @@ router.use("/token", TokenRoutes);
 router.use("/VRT", VRTRoutes);
 router.use("/block", BlockRoutes);
 router.use("/fighter", FighterRoutes);
+router.use("/stake", StakeRoutes);
 
 module.exports = router;
