@@ -9,6 +9,7 @@ const transactionSchema = new mongoose.Schema({
     },
     publicKey: {
       type: String,
+      required: true,
     },
     balance: {
       type: Number,
@@ -32,10 +33,19 @@ const transactionSchema = new mongoose.Schema({
   },
   signature: {
     type: String,
+    required: true,
   },    
   timestamp: {
     type: Date,
     default: Date.now,
+  },
+  confirmations: {
+    type: Number,
+    default: 0,
+  },
+  complete: {
+    type: Boolean,
+    default: false,
   },
 });
 

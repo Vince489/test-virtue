@@ -24,11 +24,14 @@ const blockchainSchema = new mongoose.Schema({
     default: 0,
   },
   consensusRules: {
-    consensusAlgorithm: 'Proof of Stake',
-    maxValidators: 20,
-    proposalThreshold: 75, // Percentage of validator approval required for protocol changes
-    upgradeProtocol: 'BFT', // The protocol used for upgrades
-  },  
+    type: mongoose.Schema.Types.Mixed, // Use Schema.Types.Mixed for arbitrary JSON objects
+    default: {
+      consensusAlgorithm: 'Proof of Stake',
+      maxValidators: 20,
+      proposalThreshold: 75,
+      upgradeProtocol: 'BFT',
+    },
+  }, 
 })
 
 const Blockchain = mongoose.model('Blockchain', blockchainSchema);

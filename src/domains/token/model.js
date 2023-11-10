@@ -24,21 +24,25 @@ const tokenSchema = new mongoose.Schema({
   },
   mintAuthority: {
     type: String,
+    required: true
   },
   freezeAuthority: {
     type: String,
   },
   totalSupply: {
     type: Number,
+    default: 0,
     required: true,
   },
   type: {
     type: String,
     default: 'Gaming',
+    required: true,
   },
   decimals: {
     type: Number,
-    default: 8,
+    default: 6,
+    required: true,
   },
 });
 

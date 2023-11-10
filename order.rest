@@ -1,0 +1,64 @@
+// Get all gamers
+GET http://localhost:4400/api/v1/gamer
+
+###
+// signup
+POST http://localhost:4400/api/v1/gamer/signup
+Content-Type: application/json
+
+{
+  "gamerTag": "Woke",
+  "email": "princevirtron@gmail.com",
+  "password": "12345678"
+}
+
+###
+// create a new account 
+POST http://localhost:4400/api/v1/account
+Content-Type: application/json
+
+###
+// add account to gamer
+POST http://localhost:4400/api/v1/gamer/add-account
+Content-Type: application/json
+
+{
+  "gamerTag": "Woke",
+  "accountId": "6546a395db3fbe18b10e7561"
+}
+
+###
+// Create new token account 
+POST http://localhost:4400/api/v1/tokenAccount/
+Content-Type: application/json
+
+{
+  "mint": "51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX",
+  "owner": "6546a395db3fbe18b10e7561"
+}
+
+###
+// Add token account to gamer account
+POST http://localhost:4400/api/v1/tokenAccount/associate-token-account
+Content-Type: application/json
+
+{
+  "accountId": "6546a395db3fbe18b10e7561",
+  "tokenAccountId": "6546ade6d7bb6010721e3347"
+}
+
+###
+// Transfer tokens between accounts
+POST http://localhost:4400/api/v1/tokenAccount/transfer-between-accounts
+Content-Type: application/json
+
+{
+  "senderPublicKey": "992PcfcepEDhq6KggXkEYBvBmYgWebEH1KPtkAVzgjy4",
+  "recipientPublicKey": "59bX9RYvWHLBjZjHficAivUx6VqB1AbSU1hTy7EwcQqz",
+  "mint": "51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX",
+  "amount": 1000
+}
+
+###
+// Get token account balance
+GET http://localhost:4400/api/v1/tokenAccount/balance/59bX9RYvWHLBjZjHficAivUx6VqB1AbSU1hTy7EwcQqz/51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX

@@ -11,7 +11,7 @@ const Keypair = require("./../../utils/keypair");
 router.post('/', async (req, res) => {
   try {
     // Validate input data
-    const { uri, symbol, name, mintAuthority, freezeAuthority, decimals, totalSupply, availableSupply, type } = req.body;
+    const { uri, symbol, name, mintAuthority, freezeAuthority } = req.body;
     
     // Perform validation checks, e.g., checking if required fields are present
 
@@ -40,9 +40,6 @@ router.post('/', async (req, res) => {
       name,
       mintAuthority,
       freezeAuthority,
-      decimals,
-      totalSupply,
-      type
     });
 
     // Save the token to the database

@@ -1,4 +1,7 @@
-const Validator = require('./models/Validator'); // Import the Validator model
+const express = require('express');
+const router = express.Router();
+const Validator = require('../validator/model'); // Import the Validator model
+const Transaction = require('../transaction/model'); // Import the Transaction model
 
 // Create a new route for the validation process
 router.post('/validate', async (req, res, next) => {
@@ -84,3 +87,60 @@ router.post('/validate2', async (req, res, next) => {
     next(error);
   }
 });
+
+// Create a new Validator
+router.post('/create', async (req, res, next) => {
+  try {
+    const { owner, address, stake } = req.body;
+
+    // Create a new validator document
+    const newValidator = new Validator({
+      owner: owner || 'YourValidatorName',
+      address: address || 'YourValidatorAddress',
+      stake: stake || 0,
+    });
+
+    // Save the new validator document to the database
+    await newValidator.save();
+
+    res.status(201).json(newValidator);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+// Round 1: Select 5 validators
+router.get('/select-validators', async (req, res) => {
+  try {
+    // Fetch all validators from the database
+    const allValidators = await Validator.find();
+    
+    // Shuffle the validators to ensure randomness
+    const shuffledValidators = shuffleArray(allValidators);
+
+    // Select the first 5 validators (you can adjust the number as needed)
+    const selectedValidators = shuffledValidators.slice(0, 5);
+
+    // Use the public keys of selectedValidators to verify the transaction signature the 5th validator will be the block creator and signer
+
+
+
+    // Implement the block creation logic here
+
+    res.json(selectedValidators);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+// Helper function to shuffle an array
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+module.exports = router;

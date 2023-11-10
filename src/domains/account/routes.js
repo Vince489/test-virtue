@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const router = express.Router();
 const Mnemonic = require("./../../utils/seedPhrase");
@@ -5,9 +7,10 @@ const Keypair = require("./../../utils/keypair");
 const Account = require("./model");
 const SeedPhrase = require("./../seedPhrase/model");
 const Transaction = require("./../transaction/model");
-const { encryptData, decryptData } = require("./../../utils/encrypt-decrypt");
-require("dotenv").config();
-const secret = process.env.SECRET_KEY;
+const Validator = require("./../validator/model");
+const Stake = require("./../stake/model");
+
+
 
 
 // get all accounts
@@ -57,6 +60,186 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
+
+
+router.post("/create-accounts", async (req, res, next) => {
+  try {
+    const numAccountsToCreate = 25;
+    const createdAccounts = [];
+
+    for (let i = 0; i < numAccountsToCreate; i++) {
+      // Generate a new key pair and seed phrase
+      const keypair = Keypair.generate();
+      const seedPhrase = Mnemonic.generate();
+
+      // Create a new seed phrase document
+      const newSeedPhrase = new SeedPhrase({
+        seedPhrase: seedPhrase.seedPhrase,
+      });
+
+      // Save the new seed phrase to the database
+      await newSeedPhrase.save();
+
+      // Create a new account associated with the seed phrase
+      const newAccount = new Account({
+        seedPhrase: newSeedPhrase._id, // Reference the saved seed phrase document
+        publicKey: keypair.publicKey,
+        privateKey: keypair.privateKey,
+      });
+
+      // Save the new account to the database
+      await newAccount.save();
+
+      // Retrieve the seed phrase document from the database using its ID
+      const retrievedSeedPhrase = await SeedPhrase.findById(newSeedPhrase._id);
+
+      createdAccounts.push({
+        account: newAccount,
+        seedPhrase: retrievedSeedPhrase.seedPhrase,
+      });
+    }
+
+    // Respond with the array of newly created accounts and associated seed phrases
+    res.status(201).json(createdAccounts);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//22
+router.post("/create-accounts2", async (req, res, next) => {
+  try {
+    const numAccountsToCreate = 25;
+    const createdAccounts = [];
+
+    for (let i = 0; i < numAccountsToCreate; i++) {
+      // Generate a new key pair and seed phrase
+      const keypair = Keypair.generate();
+      const seedPhrase = Mnemonic.generate();
+
+      // Create a new seed phrase document
+      const newSeedPhrase = new SeedPhrase({
+        seedPhrase: seedPhrase.seedPhrase,
+      });
+
+      // Save the new seed phrase to the database
+      await newSeedPhrase.save();
+
+      // Create a new account associated with the seed phrase
+      const newAccount = new Account({
+        seedPhrase: newSeedPhrase._id, // Reference the saved seed phrase document
+        publicKey: keypair.publicKey,
+        privateKey: keypair.privateKey,
+      });
+
+      // Save the new account to the database
+      await newAccount.save();
+
+      // Create a new stake associated with the account
+      const newStake = new Stake({
+        staker: newAccount._id, // Reference the saved account document
+        amount: 10,// Other stake-related fields go here
+        address: Keypair.generate().publicKey,
+      });
+
+      // Save the new stake to the database
+      await newStake.save();
+
+      // Add the ObjectId of the new stake to the account's 'stake' array
+      newAccount.stake.push(newStake._id);
+      await newAccount.save(); // Save the updated account
+
+      // Retrieve the seed phrase document from the database using its ID
+      const retrievedSeedPhrase = await SeedPhrase.findById(newSeedPhrase._id);
+
+      createdAccounts.push({
+        account: newAccount,
+        seedPhrase: retrievedSeedPhrase.seedPhrase,
+        stake: newStake, // Include the associated stake in the response
+      });
+    }
+
+    // Respond with the array of newly created accounts, associated seed phrases, and stakes
+    res.status(201).json(createdAccounts);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/create-account", async (req, res, next) => {
+  try {
+    const numAccountsToCreate = 25;
+    const createdAccounts = [];
+
+    for (let i = 0; i < numAccountsToCreate; i++) {
+      // Generate a new key pair and seed phrase
+      const keypair = Keypair.generate();
+      const seedPhrase = Mnemonic.generate();
+
+      // Create a new seed phrase document
+      const newSeedPhrase = new SeedPhrase({
+        seedPhrase: seedPhrase.seedPhrase,
+      });
+
+      // Save the new seed phrase to the database
+      await newSeedPhrase.save();
+
+      // Create a new account associated with the seed phrase
+      const newAccount = new Account({
+        seedPhrase: newSeedPhrase._id, // Reference the saved seed phrase document
+        publicKey: keypair.publicKey,
+        privateKey: keypair.privateKey,
+      });
+
+      // Save the new account to the database
+      await newAccount.save();
+
+      // Create a new stake associated with the account
+      const newStake = new Stake({
+        staker: newAccount._id, // Reference the saved account document
+        amount: 10, // Other stake-related fields go here
+        address: Keypair.generate().publicKey
+      });
+
+      // Save the new stake to the database
+      await newStake.save();
+
+      // Add the ObjectId of the new stake to the account's 'stake' array
+      newAccount.stake.push(newStake._id);
+      await newAccount.save(); // Save the updated account
+
+      // Create a new validator and associate it with the account
+      const newValidator = new Validator({
+        stake: newAccount.stake._id, // Other validator-related fields go here
+        address: Keypair.generate().publicKey,
+        owner: newAccount._id
+      });
+
+      console.log(newValidator);
+
+      // Save the new validator to the database
+      await newValidator.save();
+
+      // Retrieve the seed phrase document from the database using its ID
+      const retrievedSeedPhrase = await SeedPhrase.findById(newSeedPhrase._id);
+
+      createdAccounts.push({
+        account: newAccount,
+        seedPhrase: retrievedSeedPhrase.seedPhrase,
+        stake: newStake, // Include the associated stake in the response
+        validator: newValidator, // Include the associated validator in the response
+      });
+    }
+
+    // Respond with the array of newly created accounts, associated seed phrases, stakes, and validators
+    res.status(201).json(createdAccounts);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
 
 // get vrt balance by public key
 router.get('/getBalance/:publicKey/', async (req, res, next) => {

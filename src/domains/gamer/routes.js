@@ -105,7 +105,7 @@ router.post("/", async (req, res) => {
 // Get all gamers
 router.get("/", async (req, res) => {
   try {
-    const gamers = await Gamer.find({}, { password: 0 }); // exclude password field
+    const gamers = await Gamer.find({}, { password: 0 }).populate('account'); // exclude password field
     res.json(gamers);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -180,13 +180,43 @@ router.post("/add-account", async (req, res, next) => {
 });
 
 // Go to dashboard
-router.get("/dashboard", verifyToken, checkDashboardAccess, async (req, res) => {
+router.post("/dashboard", async (req, res) => {
   try {
-    const gamer = await Gamer.findById(req.gamer.gamerId);
-    res.status(200).json({ gamer }).populate('account');
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    const { gamerTag, password } = req.body;
+
+    const trimmedGamerTag = gamerTag.trim();
+    const trimmedPassword = password.trim();
+
+    // Check if gamer tag and password are empty
+    if (!trimmedGamerTag || !trimmedPassword) {
+      throw Error("Empty credentials supplied!"); 
+    }
+
+    const authenticatedGamer = await authenticateGamer({ gamerTag, password });
+
+    const gamer = { gamer: authenticatedGamer };
+
+    // Create a JWT token
+    const token = await createJWT(gamer);
+
+    // Set the token as a cookie
+    res.cookie("token", token, { 
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+      expires: new Date(Date.now() + 48 * 60 * 60 * 1000), // set expires to 48 hours from now
+      path: '/'
+    });
+
+    res.status(200).json({
+      authenticatedGamer: authenticatedGamer,
+      token: token
+    });
+    } catch (error) {
+      // Log the error for debugging
+      console.error(error);
+    // Send a generic error message to the client
+    res.status(400).json({ message: "Authentication failed" });
   }
 });
 

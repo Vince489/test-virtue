@@ -4,8 +4,10 @@ GET http://localhost:4400/api/v1/account
 
 ###
 // create a new account 
-POST http://localhost:4400/api/v1/account
+POST http://localhost:4400/api/v1/account/create-account
 Content-Type: application/json
+
+
 
 ###
 // get account info from seed phrase
@@ -44,7 +46,7 @@ Content-Type: application/json
 
 {
   "amount": 20000,
-  "publicKey": "Yb5QR4vog5Ep8m46PSWkYB5oWDSQmkNQukK2YSpvoiP"
+  "publicKey": "8o4nCpQpC4fgjaJ2ZsUkpUFcC2D1KDTTCiDMHNtEJuhn"
 }
 
 ###
@@ -69,8 +71,25 @@ GET http://localhost:4400/api/v1/block
 
 ###
 // create a new block
-POST http://localhost:4400/api/v1/block
+POST http://localhost:4400/api/v1/blockchain/create
 Content-Type: application/json
+
+{
+
+}
+
+###
+// Create a Validator
+POST http://localhost:4400/api/v1/validator/create
+Content-Type: application/json
+
+{
+  "owner": "6547a34f1b1f8a9917437255",
+  "stake": "654bd3cbd1c750dc69c83e9b"
+}
+
+
+
 
 
 ###
@@ -80,12 +99,12 @@ GET http://localhost:4400/api/v1/transaction
 
 ###
 // transfer VRT
-POST http://localhost:4400/api/v1/transaction/transfer
+POST http://localhost:4400/api/v1/transaction/transfer2
 Content-Type: application/json
 
 {
-  "senderPublicKey": "HA8gBN4rcspRtg1148CM4aLe55ZikiX3ZcL5JDPzmtjT", 
-  "recipientPublicKey": "992PcfcepEDhq6KggXkEYBvBmYgWebEH1KPtkAVzgjy4", 
+  "senderPublicKey": "8o4nCpQpC4fgjaJ2ZsUkpUFcC2D1KDTTCiDMHNtEJuhn", 
+  "recipientPublicKey": "6CzbmT8QxmBtazaExqLRe2W5ocoEJBv7WSLAkJhNe38v", 
   "amount": 23
 }
 
@@ -114,15 +133,13 @@ POST http://localhost:4400/api/v1/token
 Content-Type: application/json
 
 {
-    "uri":"https://virtronesports.com/img/IBFBelt.png",
-    "symbol": "BiNV",
-    "name": "Boxing Naition Virtron",
-    "decimals": 6,
-    "mintAuthority": "7T6C4Eis9QhcWMEVXvPpsnyzvrPj2SYUVvhgF49wRYg2e",
-    "freezeAuthority": "7T6C4iEs9QhcWMEVXvPpsnyzvrPj2SYUVvhgF49wRYg2e",
-    "totalSupply": 1000000000,
-    "type": "Gaming Token"
-  }
+  "uri": "https://virtronesports.com/img/IBFBelt.png",
+  "symbol": "TNT",
+  "name": "Total Noob Trial",
+  "mintAuthority": "7T6C4Eis9QhcWMEVXvPpsnyzvrPj2SYUVvhgF49wRYg2e",
+  "freezeAuthority": "7T6C4iEs9QhcWMEVXvPpsnyzvrPj2SYUVvhgF49wRYg2e"
+}
+
 
 ###
 // create new token account
@@ -140,7 +157,7 @@ POST http://localhost:4400/api/v1/tokenAccount/add-token-account
 Content-Type: application/json
 
 {
-  "mint": "51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX",
+  "mint": "AMwenqxNgsR9NfBvPVRnN6bXAB61u5k6zEEVFyFngyo3",
   "owner": "654295691209ceec11cb281a"
 }
 
@@ -152,11 +169,64 @@ Content-Type: application/json
 
 {
   "accountId": "654295691209ceec11cb281a",
-  "tokenAccountId": "6542a043e30ecf7cec384fa4"
+  "tokenAccountId": "65464d6db6749c4f4740eb27"
+}
+
+###
+// Add token account to gamer account
+POST http://localhost:4400/api/v1/tokenAccount/mint-tokens
+Content-Type: application/json
+
+{
+  "amountToMint": 1000000000,
+  "tokenAccountId": "65464d6db6749c4f4740eb27"
 }
 
 
+###
+// transfer tokens 2
+POST http://localhost:4400/api/v1/tokenAccount/transfer
+Content-Type: application/json
 
+{
+  "from": "65464d6db6749c4f4740eb27  ",
+  "to": "654648b00afd01faaa6ad313",
+  "amount": 40000
+}
+
+###
+// Transfer tokens between accounts
+POST http://localhost:4400/api/v1/tokenAccount/transfer-between-accounts
+Content-Type: application/json
+
+{
+  "senderPublicKey": "992PcfcepEDhq6KggXkEYBvBmYgWebEH1KPtkAVzgjy4",
+  "recipientPublicKey": "59bX9RYvWHLBjZjHficAivUx6VqB1AbSU1hTy7EwcQqz",
+  "mint": "51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX",
+  "amount": 290
+}
+
+
+###
+// transfer tokens 
+POST http://localhost:4400/api/v1/tokenAccount/transfer
+Content-Type: application/json
+
+{
+  "fromPublicKey": "HA8gBN4rcspRtg1148CM4aLe55ZikiX3ZcL5JDPzmtjT",
+  "toPublicKey": "992PcfcepEDhq6KggXkEYBvBmYgWebEH1KPtkAVzgjy4",
+  "amount": 42000
+}
+
+###
+// Create new token account 
+POST http://localhost:4400/api/v1/tokenAccount/
+Content-Type: application/json
+
+{
+  "mint": "51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX",
+  "owner": "6546a395db3fbe18b10e7561"
+}
 
 
 

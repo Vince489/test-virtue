@@ -26,7 +26,7 @@ const accountSchema = new mongoose.Schema({
   }],
   vrtBalance: {
     type: Number, 
-    default: 0,  
+    default: 10000,  
     required: true,
   },
   stake: [{

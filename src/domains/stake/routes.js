@@ -51,6 +51,9 @@ router.post('/', async (req, res, next) => {
       amount: amount,
       lockupPeriod: lockupPeriod, // You can specify the lockup period here
     });
+    
+    // Update staker vrtBalance
+    await stakerAccount.save();
 
     // Save the stake to the database
     await newStake.save();
@@ -63,9 +66,9 @@ router.post('/', async (req, res, next) => {
         balance: stakerAccount.vrtBalance,
       },
       recipient: {
-        id: stakerAccount._id, // Recipient is the same as the staker in this case
+        id: newStake._id, // Recipient is the same as the staker in this case
         publicKey: stakerPublicKey,
-        balance: stakerAccount.vrtBalance + amount, // Reflect the staked amount in the recipient's balance
+        balance: newStake.amount, // Reflect the staked amount in the recipient's balance
       },
       amount: amount,
       // You can add more transaction-specific fields if needed

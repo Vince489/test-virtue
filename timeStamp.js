@@ -1,10 +1,8 @@
-// Assuming your timestamp is a string in the format "2023-10-12T23:23:08.570+00:00"
-const timestampString = "2023-10-12T23:23:08.570+00:00";
+const now = new Date();
+const isoString = now.toISOString();
+console.log(isoString);
 
-// Create a JavaScript Date object from the timestamp string
-const timestampDate = new Date(timestampString);
-
-// Define the format options
+// Define the format options for the current date and time
 const options = {
   year: 'numeric',
   month: '2-digit',
@@ -16,9 +14,9 @@ const options = {
 };
 
 // Create a DateTimeFormat object with the specified options
-const dateTimeFormatter = new Intl.DateTimeFormat('en-US', options);
+const dateFormatter = new Intl.DateTimeFormat('en-US', options);
 
-// Format the date as a string
-const formattedTimestamp = dateTimeFormatter.format(timestampDate);
+// Format the current date and time as a string
+const formattedDateAndTime = dateFormatter.format(now);
 
-console.log(formattedTimestamp); // Output: "10/12/2023, 11:23:08 AM"
+console.log(formattedDateAndTime); // Output: "10/12/2023, 07:23:08 PM"

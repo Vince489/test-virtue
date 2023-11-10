@@ -11,16 +11,6 @@ Content-Type: application/json
   "mint": "51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX"
 }
 
-###
-// Add account to gamer
-POST http://localhost:4400/api/v1/gamer/add-gamer
-Content-Type: application/json
-
-{
-  "gamerTag": "johnny",
-  "email": "johnny@aol.com",
-  "password": "password"
-}
 
 ###
 // signup
@@ -40,7 +30,7 @@ Content-Type: application/json
 
 {
   "email": "lamaranthonyholdings@gmail.com",
-  "otp": "4292"
+  "otp": "7832"
 }
 
 ###
@@ -84,12 +74,12 @@ Content-Type: application/json
 
 ###
 // add account to gamer
-POST https://test-virtue-production.up.railway.app/api/v1/gamer/add-account
+POST http://localhost:4400/api/v1/gamer/add-account
 Content-Type: application/json
 
 {
-  "gamerTag": "Me",
-  "accountId": "652754987ca684c9008cd21c"
+  "gamerTag": "Lamar",
+  "accountId": "6547a34f1b1f8a9917437255"
 }
 
 
