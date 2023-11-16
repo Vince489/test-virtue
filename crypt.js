@@ -7,18 +7,22 @@ const secret = process.env.SECRET_KEY;
 const data = 'magic kingdom';
 console.log('Original data:', data);
 
-// data to encrypt 2
-const data2 = 'magic kingdom';
-console.log('Original data2:', data2);
-
 // encrypt data
 const eData = encryptData(data, secret);
 console.log('Encrypted data:', eData);
 
-// encrypt data 2
-const eData2 = encryptData(data2, secret);
-console.log('Encrypted data:', eData2);
-
 // decrypt data
 const deData = decryptData(eData, secret);
 console.log('Decrypted data:', deData);
+
+// data to encrypt
+const data1 = 'magic kingdom bottom ran planet escape';
+console.log('Original data1:', data1);
+
+// encrypt data
+const eData1 = encryptData(data1, secret);
+console.log('Encrypted eData1:', eData1);
+
+// decrypt data
+const deData1 = decryptData(eData1, secret);
+console.log('Decrypted data:', deData1);

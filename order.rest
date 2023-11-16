@@ -62,3 +62,9 @@ Content-Type: application/json
 ###
 // Get token account balance
 GET http://localhost:4400/api/v1/tokenAccount/balance/59bX9RYvWHLBjZjHficAivUx6VqB1AbSU1hTy7EwcQqz/51o2CpyyrmAsC2tiFRNWr56aLb4SW5sApcLMzrtSYmZX
+
+###
+// Initialize a blockchain
+POST http://localhost:4400/api/v1/blockchain/create
+Content-Type: application/json
+

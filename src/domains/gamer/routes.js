@@ -8,6 +8,9 @@ const Gamer = require("./model");
 const { verifyToken, checkDashboardAccess } = require('../../middleware/auth');
 const Account = require("./../account/model");
 
+// Define a named constant for the token expiration time (in milliseconds)
+const TOKEN_EXPIRATION_TIME_MS = 48 * 60 * 60 * 1000;
+
 
 // Endpoint to add a new gamer
 router.post('/add-gamer', async (req, res) => {
@@ -71,7 +74,8 @@ router.post("/", async (req, res) => {
 
     // Check if gamer tag and password are empty
     if (!trimmedGamerTag || !trimmedPassword) {
-      throw Error("Empty credentials supplied!"); 
+      // Return a 400 Bad Request error and stop the request chain
+      return res.status(400).json({ message: "Empty credentials supplied!" });
     }
 
     const authenticatedGamer = await authenticateGamer({ gamerTag, password });
@@ -86,7 +90,7 @@ router.post("/", async (req, res) => {
       httpOnly: true,
       sameSite: "None",
       secure: true,
-      expires: new Date(Date.now() + 48 * 60 * 60 * 1000), // set expires to 48 hours from now
+      expires: new Date(Date.now() + TOKEN_EXPIRATION_TIME_MS),
       path: '/'
     });
 

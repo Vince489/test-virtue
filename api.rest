@@ -11,18 +11,27 @@ Content-Type: application/json
 
 ###
 // get account info from seed phrase
-POST http://localhost:4400/api/v1/account/getAccount
+POST http://localhost:4400/api/v1/account/getAccount 
 Content-Type: application/json
 
 {
   "seedPhrase": "prefer donkey release pelican poverty air column angry circle soft fetch sunset"
 }
 
+###
+// transfer VRT
+POST http://localhost:4400/api/v1/transaction/transfer
+Content-Type: application/json
 
+{
+  "senderPublicKey": "DdkCHrvh9YuCz9UJmVxt8bCMx45SEVoY9Q95xB3GfpE4", 
+  "recipientPublicKey": "AXpn5fXyYhzcRwchLrWSzbhEU9Uv3A8K2Rpx4BNygcEb", 
+  "amount": 10
+}
 
 ###
 // get balance
-GET http://localhost:4400/api/v1/account/getBalance/7VaGyYw7LAuFgEy9YCDb1dSjNfo5FwvhmbzBU81KYwU8
+GET http://localhost:4400/api/v1/account/getBalance/AXpn5fXyYhzcRwchLrWSzbhEU9Uv3A8K2Rpx4BNygcEb
 
 ###
 // add VRT to db 
@@ -41,12 +50,12 @@ Content-Type: application/json
 
 ###
 // airdrop VRT 
-POST http://localhost:4400/api/v1/vrt/airdrop2
+POST http://localhost:4400/api/v1/vrt/airdrop
 Content-Type: application/json
 
 {
   "amount": 20000,
-  "publicKey": "8o4nCpQpC4fgjaJ2ZsUkpUFcC2D1KDTTCiDMHNtEJuhn"
+  "publicKey": "AXpn5fXyYhzcRwchLrWSzbhEU9Uv3A8K2Rpx4BNygcEb"
 }
 
 ###
@@ -97,16 +106,7 @@ Content-Type: application/json
 GET http://localhost:4400/api/v1/transaction
 
 
-###
-// transfer VRT
-POST http://localhost:4400/api/v1/transaction/transfer2
-Content-Type: application/json
 
-{
-  "senderPublicKey": "8o4nCpQpC4fgjaJ2ZsUkpUFcC2D1KDTTCiDMHNtEJuhn", 
-  "recipientPublicKey": "6CzbmT8QxmBtazaExqLRe2W5ocoEJBv7WSLAkJhNe38v", 
-  "amount": 23
-}
 
 ###
 // Get transaction by id
@@ -173,7 +173,7 @@ Content-Type: application/json
 }
 
 ###
-// Add token account to gamer account
+// Mint tokens
 POST http://localhost:4400/api/v1/tokenAccount/mint-tokens
 Content-Type: application/json
 

@@ -49,7 +49,7 @@ router.post("/transfer", async (req, res, next) => {
     }
 
     // Check if the sender has enough VRT balance for the transfer
-    if (senderAccount.vrtBalance < amount + transferFee) {
+    if (senderAccount.vrtBalance < amount) {
       return res.status(400).json({ message: "Insufficient VRT balance for transfer" });
     }
 
@@ -108,6 +108,19 @@ router.post("/transfer", async (req, res, next) => {
 
     // Save the block to the database
     await newBlock.save();
+
+    // Get or create the blockchain based on its name
+    let blockchain = await Blockchain.findOne({ name: 'YourBlockchainName' });
+
+    if (!blockchain) {
+      return res.status(404).json({ message: "Blockchain not found" });
+    }
+
+    // Push the transaction to the blockchain's pending transactions
+    blockchain.pendingTransactions.push(newTransaction._id);
+    
+    // Save the updated blockchain with the new transaction
+    await blockchain.save();
 
     // Push the transaction ID to the sender's and recipient's transaction arrays
     senderAccount.transactions.push(newTransaction._id);
