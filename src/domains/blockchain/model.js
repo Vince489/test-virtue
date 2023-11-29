@@ -26,7 +26,7 @@ const blockchainSchema = new mongoose.Schema({
   consensusRules: {
     type: mongoose.Schema.Types.Mixed, // Use Schema.Types.Mixed for arbitrary JSON objects
     default: {
-      consensusAlgorithm: 'Proof of Stake',
+      consensusAlgorithm: 'Proof of Stake, Proof of History',
       maxValidators: 20,
       proposalThreshold: 75,
       upgradeProtocol: 'BFT',

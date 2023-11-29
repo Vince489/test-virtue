@@ -1,0 +1,27 @@
+// add VRT to db 
+POST http://localhost:4400/api/v1/vrt
+Content-Type: application/json
+
+###
+// create a title
+POST http://localhost:4400/api/v1/title/create-title
+Content-Type: application/json
+
+{
+  "weightClass": "Super Middleweight"
+}
+
+###
+// get all titles
+GET http://localhost:4400/api/v1/title/655ba096a7abded2caee2203
+
+
+###
+// associate title with fighter
+POST http://localhost:4400/api/v1/title/associate-title
+Content-Type: application/json
+
+{
+  "titleId": "655ba096a7abded2caee2203", 
+  "fighterId": "655ba17d4d45a8b1fb9ae6e4"
+}

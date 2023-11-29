@@ -18,6 +18,7 @@ const FighterRoutes = require("./../domains/fighter");
 const StakeRoutes = require("./../domains/stake");
 const BlockchainRoutes = require("./../domains/blockchain");
 const ValidatorRoutes = require("./../domains/validator");
+const TitleRoutes = require("./../domains/title");
 
 router.use("/account", AccountRoutes);
 router.use("/tokenAccount", TokenAccountRoutes);
@@ -37,5 +38,6 @@ router.use("/fighter", FighterRoutes);
 router.use("/stake", StakeRoutes);
 router.use("/blockchain", BlockchainRoutes);
 router.use("/validator", ValidatorRoutes);
+router.use("/title", TitleRoutes);
 
 module.exports = router;

@@ -7,10 +7,31 @@ POST http://localhost:4400/api/v1/gamer/signup
 Content-Type: application/json
 
 {
-  "gamerTag": "Woke",
-  "email": "princevirtron@gmail.com",
+  "gamerTag": "Vince",
+  "email": "vincentcornelius489@gmail.com",
   "password": "12345678"
 }
+
+###
+// verify email
+POST http://localhost:4400/api/v1/email_verification/verify
+Content-Type: application/json
+
+{
+  "email": "vincentcornelius489@gmail.com",
+  "otp": "7689"
+}
+
+###
+// login
+POST http://localhost:4400/api/v1/gamer
+Content-Type: application/json
+
+{
+  "gamerTag": "Vince",
+  "password": "12345678"
+}
+
 
 ###
 // create a new account 
@@ -24,7 +45,7 @@ Content-Type: application/json
 
 {
   "gamerTag": "Woke",
-  "accountId": "6546a395db3fbe18b10e7561"
+  "accountId": "655b4fa9cb7f31367f1ec5ab"
 }
 
 ###

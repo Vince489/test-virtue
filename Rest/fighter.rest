@@ -17,7 +17,12 @@ Content-Type: application/json
     "residence": "Queens",
     "nationality": "American",
     "manager": "Damon J. Keith",
-    "trainer": "UNKNOWN",
+    "trainer": "Hail Darulah",
     "gym": "KANO Boxing",
     "promoter": "MetaBox Promotions"
 }
+
+
+###
+// Get all fighters
+GET http://localhost:4400/api/v1/fighter

@@ -1,4 +1,4 @@
-const { encryptData, decryptData } = require('./src/utils/encrypt-decrypt'); 
+const { encryptData, decryptData } = require('./encrypt-decrypt'); 
 require("dotenv").config();
 
 const secret = process.env.SECRET_KEY;

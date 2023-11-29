@@ -39,7 +39,7 @@ POST http://localhost:4400/api/v1/gamer
 Content-Type: application/json
 
 {
-  "gamerTag": "vince",
+  "gamerTag": "Lamar",
   "password": "12345678"
 }
 
