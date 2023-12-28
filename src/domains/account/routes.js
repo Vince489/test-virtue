@@ -64,7 +64,7 @@ router.post("/", async (req, res, next) => {
 
 router.post("/create-accounts", async (req, res, next) => {
   try {
-    const numAccountsToCreate = 25;
+    const numAccountsToCreate = 1;
     const createdAccounts = [];
 
     for (let i = 0; i < numAccountsToCreate; i++) {
@@ -109,7 +109,7 @@ router.post("/create-accounts", async (req, res, next) => {
 //22
 router.post("/create-accounts2", async (req, res, next) => {
   try {
-    const numAccountsToCreate = 25;
+    const numAccountsToCreate = 1;
     const createdAccounts = [];
 
     for (let i = 0; i < numAccountsToCreate; i++) {

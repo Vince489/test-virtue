@@ -1,6 +1,0 @@
-POST http://localhost:4400/api/v1/tokenAccount
-Content-Type: application/json
-
-{
-    "owner": "65408e4869c65b68cd3a74bc"
-}

@@ -1,3 +1,0 @@
-// add VRT to db 
-POST http://localhost:4400/api/v1/vrt
-Content-Type: application/json

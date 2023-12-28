@@ -2,15 +2,20 @@
 const mongoose = require('mongoose');
 
 const tokenAccountSchema = new mongoose.Schema({
-  mint: {
-    type: String,
-    required: true,
-  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Account', 
+    ref: 'Gamer', 
     required: true,
-    default: null
+  },
+  token: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Token',
+    required: true,    
+  },
+  publicKey: {
+    type: String,
+    required: true,
+    unique: true,
   },
   balance: {
     type: Number,
@@ -23,6 +28,10 @@ const tokenAccountSchema = new mongoose.Schema({
   airdropReceived: {
     type: Boolean,
     default: false
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
   transactions: [{
     type: mongoose.Schema.Types.ObjectId,

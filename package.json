@@ -1,14 +1,14 @@
 {
   "name": "test-virtue",
   "version": "1.0.0",
-  "description": "",
+  "description": "Gaming Platform",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon src/index",
     "start": "node src/index"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Metaverse", "Gaming", "NFT", "Blockchain", "Crypto"],
+  "author": "Damon J. Keith",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",

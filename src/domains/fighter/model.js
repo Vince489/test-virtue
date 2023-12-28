@@ -98,26 +98,10 @@ const fighterSchema = new mongoose.Schema({
   promoter: {
     type: String,
   },
-  tokenAccount: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Account',
-  },
-  titles: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Title',
-  }],
-  bouts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Bout',
-  }],
-  legacy: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Legacy',
-  }],
-  badges: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Badge',
-  }],
+  vrtBalance: {
+    type: Number,
+    default: 100,
+  }
 });
 
 const Fighter = mongoose.model('Fighter', fighterSchema);

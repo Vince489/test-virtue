@@ -23,7 +23,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-
 // Transfer VRT from one account to another
 router.post("/transfer", async (req, res, next) => {
   try {
@@ -31,7 +30,7 @@ router.post("/transfer", async (req, res, next) => {
 
     // Check if the amount is negative
     if (amount < 0) {
-      return res.status(400).json({ message: "Amount cannot be negative" });
+      return res.status(400).json({ message: "Please enter a valid amount." });
     }
 
     // Find the sender's account using their publicKey
@@ -54,7 +53,7 @@ router.post("/transfer", async (req, res, next) => {
     }
 
     // Deduct the transfer amount from the sender's VRT balance
-    senderAccount.vrtBalance -= amount + transferFee;
+    senderAccount.vrtBalance -= amount;
     await senderAccount.save();
 
     // Increment the recipient's VRT balance
@@ -211,7 +210,6 @@ router.post("/transfer2", async (req, res, next) => {
     next(error);
   }
 });
-
 
 // Get a transaction by ID
 router.get("/:id", async (req, res, next) => {

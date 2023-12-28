@@ -1,0 +1,16 @@
+POST http://localhost:4400/api/v1/tokenAccount
+Content-Type: application/json
+
+{
+    "owner": "65408e4869c65b68cd3a74bc"
+}
+
+###
+// Create a new token account
+POST http://localhost:4400/api/v1/tokenAccount
+Content-Type: application/json
+
+{
+    "ownerId": "6560898098bdc211300f2ebd",
+    "tokenId": "6569c2da68334947be5b78e1"
+}

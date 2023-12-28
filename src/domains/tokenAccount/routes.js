@@ -9,29 +9,41 @@ const Block = require("./../block/model");
 const bs58 = require('bs58');
 const nacl = require('tweetnacl');
 const crypto = require('crypto');
+const Keypair = require('./../../utils/keypair');
+const Token = require("./../token/model");
 
 
 // Create a new TokenAccount
-router.post("/", async (req, res, next) => {
+router.post("/", async (req, res) => {
   try {
-    // Extract the required data from the request body
-    const { mint, owner } = req.body;
+    const { ownerId, tokenId } = req.body;
 
-    // Create a new TokenAccount instance
+    // Check if the owner (Gamer) and token exist
+    const owner = await Gamer.findById(ownerId);
+    const token = await Token.findById(tokenId);
+
+    if (!owner || !token) {
+      return res.status(404).json({ message: "Owner or Token not found" });
+    }
+
+    // Create a new TokenAccount
     const newTokenAccount = new TokenAccount({
-      mint, // You should ensure that 'mint' is provided in the request body.
-      owner, // You should ensure that 'owner' is provided in the request body.
-      // You can set default values for 'balance', 'isFrozen', 'airdropReceived', and 'transactions' in the model.
+      owner: ownerId,
+      token: tokenId,
+      publicKey: Keypair.generate().publicKey
     });
 
-    // Save the new token account to the database
+    // Save the new TokenAccount
     await newTokenAccount.save();
 
-    // Respond with a success message and the created token account
-    res.status(201).json({ message: "Token account created successfully", tokenAccount: newTokenAccount });
+    // Respond with success message
+    res.status(201).json({
+      message: "TokenAccount created successfully",
+      tokenAccountId: newTokenAccount.id,
+    });
   } catch (error) {
-    // Handle any errors and pass them to the error handler middleware (next)
-    next(error);
+    console.error("Error creating TokenAccount:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

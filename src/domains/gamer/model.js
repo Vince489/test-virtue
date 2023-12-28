@@ -8,17 +8,46 @@ const gamerSchema = new mongoose.Schema({
   },
   email: { 
     type: String, 
+    required: true,
     unique: true,
-    required: true 
   },
   password: {
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+  },
+  friends: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Gamer',
+  }],
+  messages: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Message',
+  }],
   account: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
     default: null,
+  },
+  badges: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Badge',
+  }],
+  socialMedia: {
+    facebook: {
+      type: String,
+    },
+    instagram: {
+      type: String,
+    },
+    twitch: {
+      type: String,
+    },
+    youtube: {
+      type: String,
+    },
   },
   fighters: [{
     type: mongoose.Schema.Types.ObjectId,

@@ -2,6 +2,10 @@
 const mongoose = require('mongoose');
 
 const tokenSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   mint: {
     type: String,
     required: true,
@@ -17,10 +21,7 @@ const tokenSchema = new mongoose.Schema({
   symbol: {
     type: String,
     required: true,
-  },
-  name: {
-    type: String,
-    required: true,
+    unique: true,
   },
   mintAuthority: {
     type: String,
@@ -41,7 +42,7 @@ const tokenSchema = new mongoose.Schema({
   },
   decimals: {
     type: Number,
-    default: 6,
+    default: 2,
     required: true,
   },
 });

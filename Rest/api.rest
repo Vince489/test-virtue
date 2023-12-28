@@ -4,7 +4,7 @@ GET http://localhost:4400/api/v1/account
 
 ###
 // create a new account 
-POST http://localhost:4400/api/v1/account/create-account
+POST http://localhost:4400/api/v1/account/
 Content-Type: application/json
 
 
@@ -58,16 +58,7 @@ Content-Type: application/json
   "publicKey": "AXpn5fXyYhzcRwchLrWSzbhEU9Uv3A8K2Rpx4BNygcEb"
 }
 
-###
-// register new gamer
-POST http://localhost:4400/api/v1/gamer/signup
-Content-Type: application/json
 
-{
-  "gamerTag": "vince",
-  "email": "vincentcornelius489@gmail.com",
-  "password": "12345678"
-}
 
 
 ###

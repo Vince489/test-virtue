@@ -1,8 +1,0 @@
-###
-// Add account to db
-POST http://localhost:4400/api/v1/account
-Content-Type: application/json
-
-###
-// Add account to db 
-POST http://localhost:4400/api/v1/account/create-account

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { createNewGamer, authenticateGamer } = require("./controller");
 const auth = require("./../../middleware/auth");
-const { sendVerificationOTPEmail } = require("./../email_verification/controller");
 const createJWT = require("../../utils/createJWT");
 const Gamer = require("./model");
 const { verifyToken, checkDashboardAccess } = require('../../middleware/auth');
@@ -55,7 +54,6 @@ router.post("/signup", async (req, res) => {
         password,
       });
 
-      await sendVerificationOTPEmail(email);
 
       res.status(201).json('Gamer created successfully! Please verify your email address.');
     }
