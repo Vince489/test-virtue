@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 const corsOptions = {
-  origin: ['https://planetvirtron.com', 'http://localhost:3000', 'http://localhost:4400', 'https://fytrec.com'],
+  origin: ['https://planetvirtron.com', 'http://localhost:3000', 'http://localhost:4400', 'https://fytrec.com', 'http://127.0.0.1:3000'],
   credentials: true, // Allow credentials (cookies)
 };
 

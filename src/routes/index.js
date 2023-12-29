@@ -16,6 +16,7 @@ const StakeRoutes = require("./../domains/stake");
 const BlockchainRoutes = require("./../domains/blockchain");
 const ValidatorRoutes = require("./../domains/validator");
 const TitleRoutes = require("./../domains/title");
+const WaitingListRoutes = require("./../domains/waitingList");
 
 router.use("/account", AccountRoutes);
 router.use("/tokenAccount", TokenAccountRoutes);
@@ -33,5 +34,6 @@ router.use("/stake", StakeRoutes);
 router.use("/blockchain", BlockchainRoutes);
 router.use("/validator", ValidatorRoutes);
 router.use("/title", TitleRoutes);
+router.use("/waitingList", WaitingListRoutes);
 
 module.exports = router;

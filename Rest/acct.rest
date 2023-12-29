@@ -12,3 +12,17 @@ Content-Type: application/json
 // Create account with stake account
 POST http://localhost:4400/api/v1/account/create-accounts2
 Content-Type: application/json
+
+###
+// Add gamerTag to db
+POST http://localhost:4400/api/v1/waitingList/add
+Content-Type: application/json
+
+{
+  "gamerTag": "gamerTag"
+}
+
+###
+// Get all gamerTags
+GET http://localhost:4400/api/v1/waitingList/all
+
